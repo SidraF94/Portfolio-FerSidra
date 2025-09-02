@@ -507,6 +507,9 @@ function buildHTML() {
     updateProgress();
     updateInstructions();
     
+    // Actualizar botones táctiles
+    updateTouchButtons();
+    
     // HTML construido exitosamente! ✅ Ahora puedes agregar estilos CSS
 }
 
@@ -583,6 +586,9 @@ function buildCSS() {
     // Actualizar progreso y instrucciones
     updateProgress();
     updateInstructions();
+    
+    // Actualizar botones táctiles
+    updateTouchButtons();
     
     // CSS agregado exitosamente! 🎨 ¡Ahora puedes agregar JavaScript!
 }
@@ -702,6 +708,9 @@ function buildJS() {
     // Actualizar progreso y instrucciones
     updateProgress();
     updateInstructions();
+    
+    // Actualizar botones táctiles
+    updateTouchButtons();
     
     // JavaScript agregado exitosamente! ⚡ ¡Burbujas animadas y funcionalidad completa!
 }
@@ -1005,6 +1014,54 @@ function updateInstructions() {
     });
 }
 
+// Función para agregar elementos por botones táctiles
+window.addElementByTouch = function(elementType) {
+    if (canDropElement(elementType)) {
+        buildElement(elementType);
+        
+        // Actualizar estado de los botones táctiles
+        updateTouchButtons();
+        
+        // Mostrar mensaje de éxito
+        showMessage(`¡${elementType.toUpperCase()} agregado exitosamente!`);
+    } else {
+        // Mostrar mensaje de error
+        showMessage(`No puedes agregar ${elementType.toUpperCase()} aún. Sigue el orden: HTML → CSS → JS`);
+    }
+};
+
+// Función para actualizar el estado de los botones táctiles
+function updateTouchButtons() {
+    const touchHtml = document.getElementById('touch-html');
+    const touchCss = document.getElementById('touch-css');
+    const touchJs = document.getElementById('touch-js');
+    
+    if (touchHtml) {
+        if (htmlBuilt) {
+            touchHtml.disabled = true;
+            touchHtml.innerHTML = '<i class="fas fa-check"></i><span>HTML Agregado</span>';
+        }
+    }
+    
+    if (touchCss) {
+        if (htmlBuilt && !cssAdded) {
+            touchCss.disabled = false;
+        } else if (cssAdded) {
+            touchCss.disabled = true;
+            touchCss.innerHTML = '<i class="fas fa-check"></i><span>CSS Agregado</span>';
+        }
+    }
+    
+    if (touchJs) {
+        if (htmlBuilt && cssAdded && !jsAdded) {
+            touchJs.disabled = false;
+        } else if (jsAdded) {
+            touchJs.disabled = true;
+            touchJs.innerHTML = '<i class="fas fa-check"></i><span>JavaScript Agregado</span>';
+        }
+    }
+}
+
 // Función para resetear el demo de drag and drop
 window.resetDragDemo = function() {
     // Resetear estados
@@ -1065,6 +1122,26 @@ window.resetDragDemo = function() {
     
     codePlaceholder.style.display = 'block';
     codeBlocks.forEach(block => block.classList.remove('active'));
+    
+    // Resetear botones táctiles
+    const touchHtml = document.getElementById('touch-html');
+    const touchCss = document.getElementById('touch-css');
+    const touchJs = document.getElementById('touch-js');
+    
+    if (touchHtml) {
+        touchHtml.disabled = false;
+        touchHtml.innerHTML = '<i class="fab fa-html5"></i><span>Agregar HTML</span>';
+    }
+    
+    if (touchCss) {
+        touchCss.disabled = true;
+        touchCss.innerHTML = '<i class="fab fa-css3-alt"></i><span>Agregar CSS</span>';
+    }
+    
+    if (touchJs) {
+        touchJs.disabled = true;
+        touchJs.innerHTML = '<i class="fab fa-js-square"></i><span>Agregar JavaScript</span>';
+    }
     
     // Resetear progreso
     updateProgress();
