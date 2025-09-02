@@ -372,7 +372,7 @@ body {
 /* Contenedor principal del demo */
 .demo-container {
     display: grid;
-    grid-template-columns: 280px 1fr 450px;
+    grid-template-columns: 280px 1fr 200px;
     gap: 2rem;
     align-items: start;
 }
@@ -623,13 +623,14 @@ body {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* Panel derecho: Resultado */
-.demo-result {
+/* Panel derecho: Reset */
+.reset-panel {
     background: var(--bg-primary);
     border-radius: 16px;
     box-shadow: var(--shadow-md);
     border: 1px solid var(--border-color);
     height: fit-content;
+    padding: 2rem;
 }
 
 .result-header {
@@ -1944,12 +1945,12 @@ html {
     transform: scale(1.05);
 }
 
-/* Grid de proyectos con cambio automático */
+/* Grid de proyectos simplificado */
 .projects-grid {
-    position: relative;
-    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
     padding: 2rem 0;
-    height: 450px;
     width: 100%;
     max-width: 100%;
 }
@@ -1960,55 +1961,37 @@ html {
 }
 
 .project-card {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    max-width: 100%;
     background: var(--bg-primary);
     border-radius: 16px;
     overflow: hidden;
     box-shadow: var(--shadow-md);
     border: 1px solid var(--border-color);
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    opacity: 0;
-    transform: translateX(0) scale(0.8);
-    pointer-events: none;
-    z-index: 1;
-    box-sizing: border-box;
+    transition: all 0.3s ease;
     display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    min-height: 400px;
+    flex-direction: column;
+    min-height: 500px;
 }
 
 .project-image {
     position: relative;
     overflow: hidden;
-    width: 40%;
+    height: 250px;
     background: var(--bg-secondary);
-    flex-shrink: 0;
-    border-radius: 0 16px 16px 0;
 }
 
 .project-thumbnail {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
 }
 
-.project-card.active:hover .project-image {
-    transform: scale(1.02);
-}
-
-.project-card.active:hover .project-thumbnail {
+.project-card:hover .project-thumbnail {
     transform: scale(1.05);
 }
 
 .project-content {
-    width: 60%;
-    padding: 2.5rem;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -2043,211 +2026,12 @@ html {
     margin-top: auto;
 }
 
-.project-card:first-child {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-    pointer-events: all;
-    z-index: 2;
-    animation: cardEntrance 3.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.project-card.active {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-    pointer-events: all;
-    z-index: 2;
-    animation: cardPop 2.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Animaciones para las transiciones */
-@keyframes cardEntrance {
-    0% {
-        opacity: 0;
-        transform: translateX(0) scale(0.8);
-    }
-    50% {
-        opacity: 0.8;
-        transform: translateX(0) scale(1.05);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(0) scale(1);
-    }
-}
-
-@keyframes cardPop {
-    0% {
-        opacity: 0;
-        transform: translateX(0) scale(0.9);
-    }
-    70% {
-        opacity: 1;
-        transform: translateX(0) scale(1.05);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(0) scale(1);
-    }
-}
-
-/* Efecto de salida para las cards inactivas */
-.project-card:not(.active):not(:first-child) {
-    animation: cardVanish 1.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-@keyframes cardVanish {
-    0% {
-        opacity: 1;
-        transform: translateX(0) scale(1);
-    }
-    100% {
-        opacity: 0;
-        transform: translateX(0) scale(0.8);
-    }
-}
-
-/* Efecto hover para las cards activas */
-.project-card.active:hover {
-    transform: translateX(0) scale(1.01);
+.project-card:hover {
+    transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
 }
 
-.project-card.active:hover .project-image {
-    transform: scale(1.01);
-}
 
-.project-card.active:hover .project-thumbnail {
-    transform: scale(1.03);
-}
-
-.project-card.active:hover .project-content {
-    transform: translateY(-1px);
-}
-
-/* Mejorar transiciones de elementos internos */
-.project-image {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.project-card.active:hover .project-image {
-    transform: scale(1.03);
-}
-
-.project-content {
-    transition: all 0.3s ease;
-}
-
-.project-card.active:hover .project-content {
-    transform: translateY(-2px);
-}
-
-/* Controles del cambio automático */
-.auto-change-controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    margin: 1rem 0 2rem 0;
-}
-
-.change-btn {
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: var(--shadow-sm);
-    position: relative;
-    overflow: hidden;
-}
-
-.change-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s ease;
-}
-
-.change-btn:hover::before {
-    left: 100%;
-}
-
-.change-btn:hover {
-    background: var(--secondary-color);
-    transform: scale(1.1) rotate(5deg);
-    box-shadow: var(--shadow-md);
-}
-
-.change-btn:active {
-    transform: scale(0.95);
-}
-
-.change-btn i {
-    transition: all 0.3s ease;
-}
-
-.change-btn:hover i {
-    transform: scale(1.2);
-}
-
-/* Indicador de proyecto */
-.project-indicator {
-    background: var(--bg-secondary);
-    color: var(--text-secondary);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    border: 1px solid var(--border-color);
-    min-width: 60px;
-    text-align: center;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-}
-
-.project-indicator::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
-    transition: left 0.6s ease;
-}
-
-.project-indicator:hover::before {
-    left: 100%;
-}
-
-.project-indicator:hover {
-    background: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
-#current-project {
-    font-weight: 700;
-    color: var(--primary-color);
-    transition: color 0.3s ease;
-}
-
-.project-indicator:hover #current-project {
-    color: white;
-}
 
 .carousel-btn {
     background: var(--primary-color);
@@ -2709,31 +2493,22 @@ html {
         height: 40px;
     }
     
-    /* Responsive para el nuevo layout de cards */
+    /* Responsive para las cards de proyectos */
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
     .project-card {
-        flex-direction: column;
         min-height: auto;
-        height: auto;
-        position: relative;
-        opacity: 1;
-        transform: none;
-        pointer-events: all;
-        z-index: 1;
     }
     
     .project-image {
-        width: 100%;
         height: 200px;
-        border-radius: 16px 16px 0 0;
     }
     
     .project-content {
-        width: 100%;
         padding: 1.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        min-height: 300px;
     }
     
     .project-content h3 {
@@ -2744,7 +2519,6 @@ html {
     .project-content p {
         font-size: 0.9rem;
         margin-bottom: 1rem;
-        flex-grow: 1;
     }
     
     .project-tags {
@@ -2755,7 +2529,6 @@ html {
     .project-links {
         flex-direction: column;
         gap: 0.75rem;
-        margin-top: auto;
     }
     
     .project-links .btn {
@@ -3438,7 +3211,7 @@ body.dragging .drop-zone {
 /* Responsive */
 @media (max-width: 1200px) {
     .demo-container {
-        grid-template-columns: 280px 1fr 400px;
+        grid-template-columns: 280px 1fr 180px;
         gap: 1.5rem;
     }
 }

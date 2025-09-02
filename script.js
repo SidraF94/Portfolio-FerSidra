@@ -334,42 +334,9 @@ document.addEventListener('DOMContentLoaded', function() {
     initDragAndDrop();
     updateProgress();
     updateInstructions();
-    initCodeTabs();
 });
 
-function initCodeTabs() {
-    const tabs = document.querySelectorAll('.tab');
-    
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            const tabType = this.getAttribute('data-tab');
-            showCodeTab(tabType);
-        });
-    });
-}
 
-function showCodeTab(tabType) {
-    const tabs = document.querySelectorAll('.tab');
-    const codeBlocks = document.querySelectorAll('.code-block');
-    
-    // Actualizar tabs
-    tabs.forEach(tab => {
-        if (tab.getAttribute('data-tab') === tabType) {
-            tab.classList.add('active');
-        } else {
-            tab.classList.remove('active');
-        }
-    });
-    
-    // Mostrar código correspondiente
-    codeBlocks.forEach(block => {
-        if (block.id === `${tabType}-code`) {
-            block.classList.add('active');
-        } else {
-            block.classList.remove('active');
-        }
-    });
-}
 
 function initDragAndDrop() {
     const dragItems = document.querySelectorAll('.drag-item');
@@ -476,8 +443,6 @@ function buildElement(elementType) {
 function buildHTML() {
     const formDemo = document.getElementById('form-demo');
     const dropPlaceholder = document.getElementById('drop-placeholder');
-    const htmlCode = document.getElementById('html-code');
-    const codePlaceholder = document.getElementById('code-placeholder');
     
     // Ocultar placeholder y mostrar formulario
     dropPlaceholder.style.display = 'none';
@@ -488,10 +453,6 @@ function buildHTML() {
     if (form) {
         form.style.display = 'block';
     }
-    
-    // Mostrar código HTML
-    codePlaceholder.style.display = 'none';
-    htmlCode.classList.add('active');
     
     // Marcar como completado
     htmlBuilt = true;
@@ -509,8 +470,6 @@ function buildHTML() {
     
     // Actualizar botones táctiles
     updateTouchButtons();
-    
-    // HTML construido exitosamente! ✅ Ahora puedes agregar estilos CSS
 }
 
 function buildCSS() {
@@ -518,12 +477,6 @@ function buildCSS() {
     
     const formDemo = document.getElementById('form-demo');
     const form = formDemo.querySelector('.contact-form');
-    const htmlCode = document.getElementById('html-code');
-    const cssCode = document.getElementById('css-code');
-    
-    // Ocultar código HTML y mostrar CSS
-    htmlCode.classList.remove('active');
-    cssCode.classList.add('active');
     
     // Remover la clase "raw-form" y aplicar estilos
     form.classList.remove('raw-form');
@@ -589,8 +542,6 @@ function buildCSS() {
     
     // Actualizar botones táctiles
     updateTouchButtons();
-    
-    // CSS agregado exitosamente! 🎨 ¡Ahora puedes agregar JavaScript!
 }
 
 function buildJS() {
@@ -598,104 +549,13 @@ function buildJS() {
     
     const formDemo = document.getElementById('form-demo');
     const form = formDemo.querySelector('.contact-form');
-    const inputs = formDemo.querySelectorAll('input, textarea, button');
-    const cssCode = document.getElementById('css-code');
-    const jsCode = document.getElementById('js-code');
-    
-    // Ocultar código CSS y mostrar JavaScript
-    cssCode.classList.remove('active');
-    jsCode.classList.add('active');
-    
-    // Remover estilos inline y usar CSS personalizado
-    form.style.cssText = '';
-    form.classList.remove('raw-form');
-    
-    // Agregar sistema de burbujas
-    createBubbleSystem(form);
-    
-    // Animación de entrada escalonada mejorada
-    inputs.forEach((input, index) => {
-        input.style.opacity = '0';
-        input.style.transform = 'translateY(30px)';
-        input.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-        
-        setTimeout(() => {
-            input.style.opacity = '1';
-            input.style.transform = 'translateY(0)';
-        }, index * 250);
-    });
-    
-    // Mejorar estilos de inputs
-    inputs.forEach(input => {
-        if (input.tagName !== 'BUTTON') {
-            input.style.cssText = `
-                width: 100%;
-                padding: 1.25rem;
-                border: 2px solid var(--border-color);
-                border-radius: 12px;
-                font-size: 1rem;
-                transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                background-color: var(--bg-primary);
-                color: var(--text-primary);
-                font-family: inherit;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            `;
-        }
-    });
-    
-    // Mejorar estilos del botón
     const button = formDemo.querySelector('button');
-    button.style.cssText = `
-        background: var(--gradient-primary);
-        color: white;
-        border: none;
-        padding: 1.25rem 2.5rem;
-        border-radius: 12px;
-        font-size: 1.1rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        font-family: inherit;
-        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
-        position: relative;
-        overflow: hidden;
-    `;
-    
-    // Efectos del botón (simplificados)
-    button.addEventListener('mouseenter', () => {
-        button.style.transform = 'translateY(-2px)';
-        button.style.boxShadow = '0 10px 25px rgba(99, 102, 241, 0.4)';
-    });
-    
-    button.addEventListener('mouseleave', () => {
-        button.style.transform = 'translateY(0)';
-        button.style.boxShadow = '0 8px 25px rgba(99, 102, 241, 0.3)';
-    });
-    
-    // Efectos de focus mejorados
-    inputs.forEach(input => {
-        if (input.tagName !== 'BUTTON') {
-            input.addEventListener('focus', () => {
-                input.style.outline = 'none';
-                input.style.borderColor = 'var(--primary-color)';
-                input.style.boxShadow = '0 0 0 4px rgba(99, 102, 241, 0.15)';
-                input.style.transform = 'scale(1.02) translateY(-2px)';
-                input.style.boxShadow = '0 8px 25px rgba(99, 102, 241, 0.2)';
-            });
-            
-            input.addEventListener('blur', () => {
-                input.style.borderColor = 'var(--border-color)';
-                input.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
-                input.style.transform = 'scale(1) translateY(0)';
-            });
-        }
-    });
     
     // Habilitar el botón de envío
     button.disabled = false;
     button.textContent = 'Enviar Mensaje';
     
-    // Funcionalidad de envío mejorada
+    // Funcionalidad de envío simple
     form.addEventListener('submit', handleFormSubmit);
     
     // Marcar como completado
@@ -711,125 +571,9 @@ function buildJS() {
     
     // Actualizar botones táctiles
     updateTouchButtons();
-    
-    // JavaScript agregado exitosamente! ⚡ ¡Burbujas animadas y funcionalidad completa!
 }
 
-// Sistema orgánico de círculos que aparecen y desaparecen
-function createBubbleSystem(form) {
-    const bubbleContainer = document.createElement('div');
-    bubbleContainer.className = 'bubble-container';
-    bubbleContainer.style.cssText = `
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        pointer-events: none;
-        z-index: 1;
-        overflow: hidden;
-    `;
-    
-    form.appendChild(bubbleContainer);
-    
-    // Crear círculos iniciales
-    for (let i = 0; i < 12; i++) {
-        createBubble(bubbleContainer);
-    }
-    
-    // Sistema orgánico: reemplazar círculos que desaparecen
-    setInterval(() => {
-        // Remover un círculo aleatorio con desvanecimiento suave
-        const bubbles = bubbleContainer.querySelectorAll('div');
-        if (bubbles.length > 0) {
-            const randomBubble = bubbles[Math.floor(Math.random() * bubbles.length)];
-            
-            // Desvanecimiento muy suave
-            randomBubble.style.transition = 'all 3s ease-in-out';
-            randomBubble.style.opacity = '0';
-            randomBubble.style.transform = 'scale(0.5)';
-            randomBubble.style.filter = 'blur(10px)';
-            
-            // Remover después del desvanecimiento completo
-            setTimeout(() => {
-                if (randomBubble.parentNode) {
-                    randomBubble.remove();
-                }
-                
-                // Crear uno nuevo en posición aleatoria
-                setTimeout(() => {
-                    createBubble(bubbleContainer);
-                }, 500); // Delay para efecto natural
-            }, 3000); // Esperar 3 segundos para el desvanecimiento completo
-        }
-    }, 4000); // Cada 4 segundos para dar más tiempo
-}
 
-function createBubble(container) {
-    const bubble = document.createElement('div');
-    const size = Math.random() * 120 + 40; // 40px a 160px (más variado)
-    
-    // Generar posición aleatoria con margen para evitar bordes
-    const margin = 10; // Margen del 10% para evitar que se corten en los bordes
-    const startX = margin + Math.random() * (100 - 2 * margin);
-    const startY = margin + Math.random() * (100 - 2 * margin);
-    
-    // Colores aleatorios para las sombras (más variados e intensos)
-    const colors = [
-        'rgba(99, 102, 241, 0.9)',    // Azul
-        'rgba(236, 72, 153, 0.9)',    // Rosa
-        'rgba(34, 197, 94, 0.9)',     // Verde
-        'rgba(245, 158, 11, 0.9)',    // Amarillo
-        'rgba(239, 68, 68, 0.9)',     // Rojo
-        'rgba(168, 85, 247, 0.9)',    // Púrpura
-        'rgba(6, 182, 212, 0.9)',     // Cian
-        'rgba(251, 146, 60, 0.9)',    // Naranja
-        'rgba(139, 92, 246, 0.9)',    // Violeta
-        'rgba(16, 185, 129, 0.9)',    // Esmeralda
-        'rgba(249, 115, 22, 0.9)',    // Naranja intenso
-        'rgba(220, 38, 127, 0.9)',    // Rosa intenso
-        'rgba(59, 130, 246, 0.9)',    // Azul intenso
-        'rgba(16, 185, 129, 0.9)'     // Verde intenso
-    ];
-    
-    const randomColor = colors[Math.floor(Math.random() * colors.length)];
-    const blurRadius = Math.random() * 80 + 20; // 20px a 100px de blur (más variado)
-    
-    // Animaciones aleatorias para variedad
-    const animations = ['shadowFloat', 'shadowPulse'];
-    const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
-    const animationDuration = Math.random() * 10 + 4; // 4-14 segundos (más variado)
-    const animationDelay = Math.random() * 6; // Delay aleatorio 0-6 segundos
-    
-    bubble.style.cssText = `
-        position: absolute;
-        width: ${size}px;
-        height: ${size}px;
-        background: ${randomColor};
-        border-radius: 50%;
-        left: ${startX}%;
-        top: ${startY}%;
-        filter: blur(${blurRadius}px);
-        z-index: 1;
-        opacity: 0;
-        transition: opacity 2s ease-in-out, transform 2s ease-in-out;
-        transform: scale(0.8);
-        box-shadow: 0 0 40px ${randomColor}, 0 0 80px ${randomColor};
-        animation: ${randomAnimation} ${animationDuration}s ease-in-out infinite;
-        animation-delay: ${animationDelay}s;
-    `;
-    
-    container.appendChild(bubble);
-    
-    // Efecto de aparición muy suave
-    setTimeout(() => {
-        bubble.style.opacity = '0.9';
-        bubble.style.transform = 'scale(1)';
-    }, 200);
-}
-
-// Función para redistribuir los círculos existentes (ya no se usa)
-// function redistributeBubbles(container) { ... }
 
 // Función mejorada para manejar el envío del formulario
 function handleFormSubmit(e) {
@@ -1021,12 +765,6 @@ window.addElementByTouch = function(elementType) {
         
         // Actualizar estado de los botones táctiles
         updateTouchButtons();
-        
-        // Mostrar mensaje de éxito
-        showMessage(`¡${elementType.toUpperCase()} agregado exitosamente!`);
-    } else {
-        // Mostrar mensaje de error
-        showMessage(`No puedes agregar ${elementType.toUpperCase()} aún. Sigue el orden: HTML → CSS → JS`);
     }
 };
 
@@ -1116,12 +854,7 @@ window.resetDragDemo = function() {
         </form>
     `;
     
-    // Resetear código
-    const codePlaceholder = document.getElementById('code-placeholder');
-    const codeBlocks = document.querySelectorAll('.code-block');
-    
-    codePlaceholder.style.display = 'block';
-    codeBlocks.forEach(block => block.classList.remove('active'));
+
     
     // Resetear botones táctiles
     const touchHtml = document.getElementById('touch-html');
@@ -1252,68 +985,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-function showTab(tabType) {
-    const tabs = document.querySelectorAll('.tab');
-    const codeBlocks = document.querySelectorAll('.code-block');
-    
-    // Actualizar tabs
-    tabs.forEach(tab => {
-        if (tab.getAttribute('data-tab') === tabType) {
-            tab.classList.add('active');
-        } else {
-            tab.classList.remove('active');
-        }
-    });
-    
-    // Mostrar código correspondiente
-    codeBlocks.forEach(block => {
-        if (block.id === `${tabType}-code`) {
-            block.classList.add('active');
-        } else {
-            block.classList.remove('active');
-        }
-    });
-}
 
-window.showMessage = function(message) {
-    const formDemo = document.getElementById('form-demo');
-    const messageDiv = document.createElement('div');
-    messageDiv.className = 'build-message';
-    messageDiv.textContent = message;
-    messageDiv.style.cssText = `
-        position: absolute;
-        top: -40px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: var(--primary-color);
-        color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-size: 0.875rem;
-        font-weight: 500;
-        z-index: 1000;
-        animation: slideDown 0.5s ease;
-    `;
-    
-    formDemo.style.position = 'relative';
-    formDemo.appendChild(messageDiv);
-    
-    setTimeout(() => {
-        messageDiv.remove();
-    }, 3000);
-}
 
-// Agregar estilos para la animación del mensaje
-const messageStyles = `
-    @keyframes slideDown {
-        from { transform: translateX(-50%) translateY(-20px); opacity: 0; }
-        to { transform: translateX(-50%) translateY(0); opacity: 1; }
-    }
-`;
 
-const messageStyleSheet = document.createElement('style');
-messageStyleSheet.textContent = messageStyles;
-document.head.appendChild(messageStyleSheet);
 
 // Funcionalidad del modo nocturno
 const themeToggle = document.getElementById('theme-toggle');
@@ -1646,90 +1320,4 @@ window.scrollToSection = function(sectionName) {
     }
 };
 
-// Funcionalidad de cambio automático de proyectos
-let currentProject = 0;
-const totalProjects = 4;
-let autoChangeInterval;
-
-function changeProject(direction) {
-    // Obtener todas las cards
-    const projectCards = document.querySelectorAll('.project-card');
-    
-    console.log('Cambiando proyecto. Dirección:', direction, 'Proyecto actual:', currentProject);
-    
-    // Ocultar la card actual
-    projectCards[currentProject].classList.remove('active');
-    
-    // Calcular nueva posición
-    currentProject += direction;
-    
-    if (currentProject < 0) {
-        currentProject = totalProjects - 1;
-    } else if (currentProject >= totalProjects) {
-        currentProject = 0;
-    }
-    
-    console.log('Nuevo proyecto:', currentProject);
-    
-    // Mostrar la nueva card
-    projectCards[currentProject].classList.add('active');
-    
-    // Actualizar indicador
-    updateIndicator();
-    
-    // Reiniciar el timer automático
-    resetAutoChange();
-}
-
-function updateIndicator() {
-    const currentIndicator = document.getElementById('current-project');
-    if (currentIndicator) {
-        currentIndicator.textContent = currentProject + 1;
-    }
-}
-
-function startAutoChange() {
-    autoChangeInterval = setInterval(() => {
-        changeProject(1);
-    }, 5000); // Cambiar cada 5 segundos
-}
-
-function resetAutoChange() {
-    if (autoChangeInterval) {
-        clearInterval(autoChangeInterval);
-        startAutoChange();
-    }
-}
-
-function stopAutoChange() {
-    if (autoChangeInterval) {
-        clearInterval(autoChangeInterval);
-    }
-}
-
-// Inicializar cuando se carga la página
-document.addEventListener('DOMContentLoaded', function() {
-    // Obtener todas las cards
-    const projectCards = document.querySelectorAll('.project-card');
-    
-    // Ocultar todas las cards excepto la primera
-    projectCards.forEach((card, index) => {
-        if (index === 0) {
-            card.classList.add('active');
-        } else {
-            card.classList.remove('active');
-        }
-    });
-    
-    // Iniciar cambio automático
-    startAutoChange();
-    
-    // Pausar cambio automático cuando se hace hover sobre las cards
-    projectCards.forEach(card => {
-        card.addEventListener('mouseenter', stopAutoChange);
-        card.addEventListener('mouseleave', startAutoChange);
-    });
-    
-    // Agregar console.log para debug
-    console.log('Carrusel inicializado con', projectCards.length, 'proyectos');
-}); 
+ 
