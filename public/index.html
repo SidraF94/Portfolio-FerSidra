@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fernando Sidra - Portfolio</title>
+    <link rel="stylesheet" href="estilos.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Kaushan+Script&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navegación -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2 class="elaborate-logo">Fernando Sidra</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#inicio" class="nav-link" onclick="scrollToSection('inicio')">Inicio</a></li>
+                <li><a href="#sobre-mi" class="nav-link" onclick="scrollToSection('sobre-mi')">Sobre Mí</a></li>
+                <li><a href="#proyectos" class="nav-link" onclick="scrollToSection('proyectos')">Proyectos</a></li>
+                <li><a href="#demo" class="nav-link" onclick="scrollToSection('demo')">Contacto</a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
+                <i class="fas fa-moon"></i>
+            </button>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sección de Inicio -->
+    <section id="inicio" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title typewriter-title">Hola, soy <span class="highlight">Fernando Sidra</span></h1>
+                <p class="hero-subtitle">Creo experiencias digitales únicas y funcionales</p>
+                <div class="hero-buttons">
+                    <button onclick="scrollToSection('proyectos')" class="btn btn-primary">Ver Proyectos</button>
+                    <button onclick="scrollToSection('demo')" class="btn btn-secondary">Contactar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contenido Principal -->
+    <div class="main-content">
+            <!-- Sección: Sobre Mí -->
+            <section id="sobre-mi" class="section">
+                <div class="about-section">
+                    <h2 class="section-title">Sobre Mí</h2>
+                    <div class="about-content">
+                        <div class="about-text">
+                            <p>Soy un desarrollador web apasionado por crear experiencias digitales únicas y funcionales. Me especializo en tecnologías modernas como HTML5, CSS3 y JavaScript.</p>
+                            <p>Mi enfoque se centra en escribir código limpio, crear interfaces intuitivas y asegurar que cada proyecto sea responsivo y accesible.</p>
+                        </div>
+                        <div class="skills-grid">
+                            <div class="skill-item">
+                                <i class="fab fa-html5"></i>
+                                <span>HTML5</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-css3-alt"></i>
+                                <span>CSS3</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-js-square"></i>
+                                <span>JavaScript</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-git-alt"></i>
+                                <span>Git</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>Responsive</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-firebase"></i>
+                                <span>Firebase</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección: Proyectos -->
+            <section id="proyectos" class="section">
+                <div class="projects-section">
+                    <h2 class="section-title">Mis Proyectos</h2>
+                    
+                    <!-- Controles del cambio automático -->
+                    <div class="auto-change-controls">
+                        <button class="change-btn" id="prev-btn" onclick="changeProject(-1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <div class="project-indicator">
+                            <span id="current-project">1</span> de <span id="total-projects">4</span>
+                        </div>
+                        
+                        <button class="change-btn" id="next-btn" onclick="changeProject(1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="projects-grid">
+                        <div class="project-card active">
+                                                            <div class="project-image">
+                                    <img src="img/gastronoguia-cap.png" alt="GastronoGuia" class="project-thumbnail">
+                                </div>
+                            <div class="project-content">
+                                <h3>GastronoGuia</h3>
+                                <p>Guía gastronómica completa con HTML/CSS puro. Navegación intuitiva y diseño responsive.</p>
+                                <div class="project-tags">
+                                    <span class="tag">HTML5</span>
+                                    <span class="tag">CSS3</span>
+                                    <span class="tag">SCSS</span>
+                                    <span class="tag">Responsive</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://sidraf94.github.io/GastronoGuia/index.html" target="_blank" class="btn btn-primary">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        Ver Demo
+                                    </a>
+                                    <a href="https://github.com/SidraF94/GastronoGuia" target="_blank" class="btn btn-secondary">
+                                        <i class="fab fa-github"></i>
+                                        Ver Código
+                                    </a>
+                                    <button class="btn btn-outline" onclick="openProjectModal('gastronomica')">
+                                        <i class="fas fa-info-circle"></i>
+                                        Más Info
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                                                            <div class="project-image">
+                                    <img src="img/homebanking-cap.png" alt="Homebanking" class="project-thumbnail">
+                                </div>
+                            <div class="project-content">
+                                <h3>Homebanking JavaScript</h3>
+                                <p>Simulador completo de banca online con JavaScript vanilla. Depósitos, transferencias y más.</p>
+                                <div class="project-tags">
+                                    <span class="tag">JavaScript</span>
+                                    <span class="tag">Vanilla</span>
+                                    <span class="tag">localStorage</span>
+                                    <span class="tag">APIs</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://sidraf94.github.io/Homebanking-JavaScript/" target="_blank" class="btn btn-primary">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        Ver Demo
+                                    </a>
+                                    <a href="https://github.com/SidraF94/Homebanking-JavaScript" target="_blank" class="btn btn-secondary">
+                                        <i class="fab fa-github"></i>
+                                        Ver Código
+                                    </a>
+                                    <button class="btn btn-outline" onclick="openProjectModal('javascript')">
+                                        <i class="fas fa-info-circle"></i>
+                                        Más Info
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="img/captura-agendamiento.png" alt="Sistema de Agendamiento" class="project-thumbnail">
+                            </div>
+                            <div class="project-content">
+                                <h3>Sistema de Agendamiento</h3>
+                                <p>Sistema privado de gestión de citas con Firebase. Autenticación y base de datos en tiempo real.</p>
+                                <div class="project-tags">
+                                    <span class="tag">Firebase</span>
+                                    <span class="tag">JavaScript</span>
+                                    <span class="tag">Sistema</span>
+                                    <span class="tag">Privado</span>
+                                </div>
+                                <div class="project-links">
+                                    <button class="btn btn-primary" onclick="openProjectModal('agendamiento')">
+                                        <i class="fas fa-play"></i>
+                                        Ver Video Demo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="img/captura-react.png" alt="Tienda Emoji React" class="project-thumbnail">
+                            </div>
+                            <div class="project-content">
+                                <h3>Tienda Emoji React</h3>
+                                <p>Landing page de una tienda virtual de emojis construida con React. Incluye modo nocturno y navegación suave.</p>
+                                <div class="project-tags">
+                                    <span class="tag">React</span>
+                                    <span class="tag">JavaScript</span>
+                                    <span class="tag">CSS</span>
+                                    <span class="tag">SweetAlert2</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://sidraf94.github.io/-NavegaLasRutas-Sidra-/" target="_blank" class="btn btn-primary">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        Ver Demo
+                                    </a>
+                                    <a href="https://github.com/SidraF94/-NavegaLasRutas-Sidra-" target="_blank" class="btn btn-secondary">
+                                        <i class="fab fa-github"></i>
+                                        Ver Código
+                                    </a>
+                                    <button class="btn btn-outline" onclick="openProjectModal('react')">
+                                        <i class="fas fa-info-circle"></i>
+                                        Más Info
+                                    </button>
+                                </div>
+                            </div>
+                                                    </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección: Demo Interactivo -->
+            <section id="demo" class="section">
+                <div class="tech-demo-section">
+                    <div class="demo-header">
+                        <h2>Construye tu Formulario de Contacto</h2>
+                        <p>Arrastra los elementos al área del formulario para construirlo paso a paso</p>
+                    </div>
+                    
+                    <div class="demo-container">
+                        <!-- Panel izquierdo: Elementos arrastrables -->
+                        <div class="drag-elements">
+                            <h3>Elementos Disponibles</h3>
+                            <div class="drag-item" draggable="true" data-type="html" data-step="1">
+                                <div class="drag-icon">
+                                    <i class="fab fa-html5"></i>
+                                </div>
+                                <div class="drag-content">
+                                    <h4>HTML</h4>
+                                    <p>Estructura básica del formulario</p>
+                                    <small>Arrastra aquí para comenzar</small>
+                                </div>
+                                <div class="drag-status">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="drag-item" draggable="true" data-type="css" data-step="2">
+                                <div class="drag-icon">
+                                    <i class="fab fa-css3-alt"></i>
+                                </div>
+                                <div class="drag-content">
+                                    <h4>CSS</h4>
+                                    <p>Estilos y diseño visual</p>
+                                    <small>Bloqueado hasta agregar HTML</small>
+                                </div>
+                                <div class="drag-status">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="drag-item" draggable="true" data-type="js" data-step="3">
+                                <div class="drag-icon">
+                                    <i class="fab fa-js-square"></i>
+                                </div>
+                                <div class="drag-content">
+                                    <h4>JavaScript</h4>
+                                    <p>Funcionalidad e interactividad</p>
+                                    <small>Bloqueado hasta agregar CSS</small>
+                                </div>
+                                <div class="drag-status">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Panel central: Área de construcción -->
+                        <div class="build-area">
+                            <div class="build-header">
+                                <h3>Área de Construcción</h3>
+                                <div class="build-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="progress-fill"></div>
+                                    </div>
+                                    <span class="progress-text">0/3 elementos</span>
+                                </div>
+                            </div>
+                            
+                            <div class="drop-zone" id="drop-zone">
+                                <div class="drop-placeholder" id="drop-placeholder">
+                                    <i class="fas fa-hand-pointer"></i>
+                                    <p>Arrastra aquí el primer elemento (HTML)</p>
+                                    <small>El formulario se construirá paso a paso</small>
+                                </div>
+                                <div id="form-demo" class="form-demo" style="display: none;">
+                                <form class="contact-form raw-form" action="https://formspree.io/f/mdklavvo" method="POST" id="contact-form">
+                                    <div class="form-group">
+                                        <input type="text" name="nombre" placeholder="Nombre" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="email" name="email" placeholder="Email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea name="mensaje" placeholder="Mensaje" rows="4" required></textarea>
+                                    </div>
+                                    <button type="submit" disabled>Enviar (No funcional aún)</button>
+                                </form>
+                            </div>
+                            </div>
+                            
+                            <div class="build-instructions">
+                                <div class="instruction" id="instruction-1">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Comienza arrastrando HTML para crear la estructura básica</span>
+                                </div>
+                                <div class="instruction" id="instruction-2" style="display: none;">
+                                    <i class="fas fa-palette"></i>
+                                    <span>Ahora arrastra CSS para darle estilo al formulario</span>
+                                </div>
+                                <div class="instruction" id="instruction-3" style="display: none;">
+                                    <i class="fas fa-magic"></i>
+                                    <span>Finalmente arrastra JavaScript para la funcionalidad</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Panel derecho: Código y explicación -->
+                        <div class="code-panel">
+                            <div class="code-header">
+                                <h3>Código Agregado</h3>
+                                <div class="code-tabs">
+                                    <span class="tab active" data-tab="html">HTML</span>
+                                    <span class="tab" data-tab="css">CSS</span>
+                                    <span class="tab" data-tab="js">JS</span>
+                                </div>
+                            </div>
+                            
+                            <div class="code-content">
+                                <div id="html-code" class="code-block active">
+                                    <pre><code>&lt;form class="contact-form"&gt;
+  &lt;div class="form-group"&gt;
+    &lt;input type="text" placeholder="Nombre"&gt;
+  &lt;/div&gt;
+  &lt;div class="form-group"&gt;
+    &lt;input type="text" placeholder="Email"&gt;
+  &lt;/div&gt;
+  &lt;div class="form-group"&gt;
+    &lt;textarea placeholder="Mensaje"&gt;&lt;/textarea&gt;
+  &lt;/div&gt;
+  &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                                </div>
+                                
+                                <div id="css-code" class="code-block">
+                                    <pre><code>.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: var(--bg-primary);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}</code></pre>
+                                </div>
+                                
+                                <div id="js-code" class="code-block">
+                                    <pre><code>// Animación de entrada escalonada
+const inputs = document.querySelectorAll('.form-group input, .form-group textarea');
+inputs.forEach((input, index) => {
+  input.style.opacity = '0';
+  input.style.transform = 'translateY(20px)';
+  
+  setTimeout(() => {
+    input.style.transition = 'all 0.6s ease';
+    input.style.opacity = '1';
+    input.style.transform = 'translateY(0)';
+  }, index * 200);
+});
+
+// Funcionalidad de envío
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  // Lógica de envío aquí
+});</code></pre>
+                                </div>
+                                
+                                <div id="code-placeholder" class="code-placeholder">
+                                    <i class="fas fa-code"></i>
+                                    <p>Arrastra elementos para ver el código</p>
+                                </div>
+                            </div>
+                            
+                            <div class="reset-section">
+                                <button class="reset-btn" onclick="resetDragDemo()">
+                                    <i class="fas fa-redo"></i>
+                                    <span>Reiniciar Demo</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Información de contacto -->
+                    <div class="contact-info-section">
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <h4>Email</h4>
+                                    <p>fer.sidra@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-code"></i>
+                                <div>
+                                    <h4>Disponible para</h4>
+                                    <p>Proyectos freelance y colaboraciones</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modal para proyectos -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Fernando Sidra. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
