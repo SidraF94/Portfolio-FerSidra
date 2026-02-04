@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fernando Sidra - Portfolio</title>
+    <link rel="stylesheet" href="estilos.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Kaushan+Script&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navegación -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2 class="elaborate-logo">Fernando Sidra</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#inicio" class="nav-link" onclick="scrollToSection('inicio')">Inicio</a></li>
+                <li><a href="#sobre-mi" class="nav-link" onclick="scrollToSection('sobre-mi')">Sobre Mí</a></li>
+                <li><a href="#proyectos" class="nav-link" onclick="scrollToSection('proyectos')">Proyectos</a></li>
+                <li><a href="#demo" class="nav-link" onclick="scrollToSection('demo')">Contacto</a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
+                <i class="fas fa-moon"></i>
+            </button>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sección de Inicio -->
+    <section id="inicio" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title typewriter-title">Hola, soy <span class="highlight">Fernando Sidra</span></h1>
+                <p class="hero-subtitle">Creo experiencias digitales únicas y funcionales</p>
+                <div class="hero-buttons">
+                    <button onclick="scrollToSection('proyectos')" class="btn btn-primary">Ver Proyectos</button>
+                    <button onclick="scrollToSection('demo')" class="btn btn-secondary">Contactar</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="img/profile-fernando.jpg" alt="Fernando Sidra" class="profile-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Contenido Principal -->
+    <div class="main-content">
+            <!-- Sección: Sobre Mí -->
+            <section id="sobre-mi" class="section">
+                <div class="about-section">
+                    <h2 class="section-title">Sobre Mí</h2>
+                    <div class="about-content">
+                        <div class="about-text">
+                            <p>Soy un desarrollador web apasionado por crear experiencias digitales únicas y funcionales. Me especializo en tecnologías modernas como HTML5, CSS3 y JavaScript.</p>
+                            <p>Mi enfoque se centra en escribir código limpio, crear interfaces intuitivas y asegurar que cada proyecto sea responsivo y accesible.</p>
+                        </div>
+                        <div class="skills-grid">
+                            <div class="skill-item">
+                                <i class="fab fa-html5"></i>
+                                <span>HTML5</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-css3-alt"></i>
+                                <span>CSS3</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-js-square"></i>
+                                <span>JavaScript</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-react"></i>
+                                <span>React</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-git-alt"></i>
+                                <span>Git</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>Responsive</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-firebase"></i>
+                                <span>Firebase</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-node-js"></i>
+                                <span>Node.js</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-server"></i>
+                                <span>Express</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-database"></i>
+                                <span>MongoDB</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-code"></i>
+                                <span>Handlebars</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección: Proyectos -->
+            <section id="proyectos" class="section">
+                <div class="projects-section">
+                    <h2 class="section-title">Mis Proyectos</h2>
+                    
+
+                    
+                    <div class="projects-grid">
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="img/modulolaboratorio1.jpeg" alt="Módulo Laboratorio" class="project-thumbnail">
+                            </div>
+                            <div class="project-content">
+                                <h3>Módulo Laboratorio</h3>
+                                <p>Sistema completo de gestión de laboratorio médico con Firebase. Incluye gestión de pacientes, resultados, generación de PDFs y base de datos en tiempo real.</p>
+                                <div class="project-tags">
+                                    <span class="tag">JavaScript</span>
+                                    <span class="tag">Firestore</span>
+                                    <span class="tag">Realtime DB</span>
+                                    <span class="tag">PDF</span>
+                                </div>
+                                <div class="project-links">
+                                    <button class="btn btn-outline" onclick="openProjectModal('laboratorio')">
+                                        <i class="fas fa-info-circle"></i>
+                                        Más Info
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="img/jabones-captura1.png" alt="Tienda de Jabones" class="project-thumbnail">
+                            </div>
+                            <div class="project-content">
+                                <h3>Tienda de Jabones Artesanales</h3>
+                                <p>E-commerce completo de jabones artesanales desarrollado con React. Integra Firebase para gestión de productos, carrito de compras y autenticación de usuarios.</p>
+                                <div class="project-tags">
+                                    <span class="tag">React</span>
+                                    <span class="tag">Firebase</span>
+                                    <span class="tag">E-commerce</span>
+                                    <span class="tag">Responsive</span>
+                                </div>
+                                <div class="project-links">
+                                    <button class="btn btn-outline" onclick="openProjectModal('jabones')">
+                                        <i class="fas fa-info-circle"></i>
+                                        Más Info
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="img/backend1-1.png" alt="E-Commerce Backend API" class="project-thumbnail">
+                            </div>
+                            <div class="project-content">
+                                <h3>E-Commerce Backend API</h3>
+                                <p>API RESTful completa para e-commerce con Node.js y Express. Incluye gestión de productos y carritos, actualización en tiempo real con Socket.IO y persistencia en MongoDB.</p>
+                                <div class="project-tags">
+                                    <span class="tag">Node.js</span>
+                                    <span class="tag">Express</span>
+                                    <span class="tag">MongoDB</span>
+                                    <span class="tag">Socket.IO</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://github.com/SidraF94/EntregaFinal-Sidra" target="_blank" class="btn btn-secondary">
+                                        <i class="fab fa-github"></i>
+                                        Ver Código
+                                    </a>
+                                    <button class="btn btn-outline" onclick="openProjectModal('backend')">
+                                        <i class="fas fa-info-circle"></i>
+                                        Más Info
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="img/Backend2-1.png" alt="Sistema de Autenticación" class="project-thumbnail">
+                            </div>
+                            <div class="project-content">
+                                <h3>Sistema de Autenticación de Usuarios</h3>
+                                <p>Sistema completo de autenticación con Node.js y Express. Implementa JWT, Passport Local y GitHub OAuth con encriptación de contraseñas y gestión segura de sesiones.</p>
+                                <div class="project-tags">
+                                    <span class="tag">Node.js</span>
+                                    <span class="tag">Passport.js</span>
+                                    <span class="tag">JWT</span>
+                                    <span class="tag">OAuth</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://github.com/SidraF94/BackendII" target="_blank" class="btn btn-secondary">
+                                        <i class="fab fa-github"></i>
+                                        Ver Código
+                                    </a>
+                                    <button class="btn btn-outline" onclick="openProjectModal('auth')">
+                                        <i class="fas fa-info-circle"></i>
+                                        Más Info
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                                                            <div class="project-image">
+                                    <img src="img/gastronoguia-cap.png" alt="GastronoGuia" class="project-thumbnail">
+                                </div>
+                            <div class="project-content">
+                                <h3>GastronoGuia</h3>
+                                <p>Guía gastronómica completa con HTML/CSS puro. Navegación intuitiva y diseño responsive.</p>
+                                <div class="project-tags">
+                                    <span class="tag">HTML5</span>
+                                    <span class="tag">CSS3</span>
+                                    <span class="tag">SCSS</span>
+                                    <span class="tag">Responsive</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://sidraf94.github.io/GastronoGuia/index.html" target="_blank" class="btn btn-primary">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        Ver Demo
+                                    </a>
+                                    <a href="https://github.com/SidraF94/GastronoGuia" target="_blank" class="btn btn-secondary">
+                                        <i class="fab fa-github"></i>
+                                        Ver Código
+                                    </a>
+                                    <button class="btn btn-outline" onclick="openProjectModal('gastronomica')">
+                                        <i class="fas fa-info-circle"></i>
+                                        Más Info
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                                                            <div class="project-image">
+                                    <img src="img/homebanking-cap.png" alt="Homebanking" class="project-thumbnail">
+                                </div>
+                            <div class="project-content">
+                                <h3>Homebanking JavaScript</h3>
+                                <p>Simulador completo de banca online con JavaScript vanilla. Depósitos, transferencias y más.</p>
+                                <div class="project-tags">
+                                    <span class="tag">JavaScript</span>
+                                    <span class="tag">Vanilla</span>
+                                    <span class="tag">localStorage</span>
+                                    <span class="tag">APIs</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://sidraf94.github.io/Homebanking-JavaScript/" target="_blank" class="btn btn-primary">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        Ver Demo
+                                    </a>
+                                    <a href="https://github.com/SidraF94/Homebanking-JavaScript" target="_blank" class="btn btn-secondary">
+                                        <i class="fab fa-github"></i>
+                                        Ver Código
+                                    </a>
+                                    <button class="btn btn-outline" onclick="openProjectModal('javascript')">
+                                        <i class="fas fa-info-circle"></i>
+                                        Más Info
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="img/captura-agendamiento.png" alt="Sistema de Agendamiento" class="project-thumbnail">
+                            </div>
+                            <div class="project-content">
+                                <h3>Sistema de Agendamiento</h3>
+                                <p>Sistema privado de gestión de citas con Firebase. Autenticación y base de datos en tiempo real.</p>
+                                <div class="project-tags">
+                                    <span class="tag">Firebase</span>
+                                    <span class="tag">JavaScript</span>
+                                    <span class="tag">Sistema</span>
+                                    <span class="tag">Privado</span>
+                                </div>
+                                <div class="project-links">
+                                    <button class="btn btn-primary" onclick="openProjectModal('agendamiento')">
+                                        <i class="fas fa-play"></i>
+                                        Ver Video Demo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="img/captura-react.png" alt="Tienda Emoji React" class="project-thumbnail">
+                            </div>
+                            <div class="project-content">
+                                <h3>Tienda Emoji React</h3>
+                                <p>Landing page de una tienda virtual de emojis construida con React. Incluye modo nocturno y navegación suave.</p>
+                                <div class="project-tags">
+                                    <span class="tag">React</span>
+                                    <span class="tag">JavaScript</span>
+                                    <span class="tag">CSS</span>
+                                    <span class="tag">SweetAlert2</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://github.com/SidraF94/-NavegaLasRutas-Sidra-" target="_blank" class="btn btn-secondary">
+                                        <i class="fab fa-github"></i>
+                                        Ver Código
+                                    </a>
+                                    <button class="btn btn-outline" onclick="openProjectModal('react')">
+                                        <i class="fas fa-info-circle"></i>
+                                        Más Info
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <!-- Sección: Contacto -->
+            <section id="demo" class="section contact-section">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Contacto</h2>
+                        <p class="section-subtitle">¿Tienes un proyecto en mente? ¡Hablemos!</p>
+                    </div>
+                    
+                    <div class="contact-wrapper">
+                        <!-- Información de contacto -->
+                        <div class="contact-info-box">
+                            <h3>Información de Contacto</h3>
+                            <div class="contact-details">
+                                <div class="contact-item">
+                                    <i class="fas fa-envelope"></i>
+                                    <div>
+                                        <h4>Email</h4>
+                                        <a href="mailto:fer.sidra@gmail.com">fer.sidra@gmail.com</a>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fab fa-github"></i>
+                                    <div>
+                                        <h4>GitHub</h4>
+                                        <a href="https://github.com/SidraF94" target="_blank">github.com/SidraF94</a>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-code"></i>
+                                    <div>
+                                        <h4>Disponible para</h4>
+                                        <p>Proyectos freelance y colaboraciones</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Formulario de contacto -->
+                        <div class="contact-form-box">
+                            <h3>Envíame un mensaje</h3>
+                            <form class="contact-form" action="https://formspree.io/f/mdklavvo" method="POST" id="contact-form">
+                                <div class="form-group">
+                                    <label for="nombre">Nombre</label>
+                                    <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mensaje">Mensaje</label>
+                                    <textarea id="mensaje" name="mensaje" placeholder="Cuéntame sobre tu proyecto..." rows="5" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-submit">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Enviar Mensaje
+                                </button>
+                                <div class="form-status" id="form-status"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modal para proyectos -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Fernando Sidra. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
