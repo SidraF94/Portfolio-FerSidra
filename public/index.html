@@ -43,6 +43,9 @@
                     <button onclick="scrollToSection('demo')" class="btn btn-secondary">Contactar</button>
                 </div>
             </div>
+            <div class="hero-image">
+                <img src="img/profile-fernando.jpg" alt="Fernando Sidra" class="profile-image">
+            </div>
         </div>
     </section>
 
@@ -71,6 +74,10 @@
                                 <span>JavaScript</span>
                             </div>
                             <div class="skill-item">
+                                <i class="fab fa-react"></i>
+                                <span>React</span>
+                            </div>
+                            <div class="skill-item">
                                 <i class="fab fa-git-alt"></i>
                                 <span>Git</span>
                             </div>
@@ -82,6 +89,22 @@
                                 <i class="fab fa-firebase"></i>
                                 <span>Firebase</span>
                             </div>
+                            <div class="skill-item">
+                                <i class="fab fa-node-js"></i>
+                                <span>Node.js</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-server"></i>
+                                <span>Express</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-database"></i>
+                                <span>MongoDB</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-code"></i>
+                                <span>Handlebars</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -92,23 +115,106 @@
                 <div class="projects-section">
                     <h2 class="section-title">Mis Proyectos</h2>
                     
-                    <!-- Controles del cambio automático -->
-                    <div class="auto-change-controls">
-                        <button class="change-btn" id="prev-btn" onclick="changeProject(-1)">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        
-                        <div class="project-indicator">
-                            <span id="current-project">1</span> de <span id="total-projects">4</span>
-                        </div>
-                        
-                        <button class="change-btn" id="next-btn" onclick="changeProject(1)">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
+
                     
                     <div class="projects-grid">
-                        <div class="project-card active">
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="img/modulolaboratorio1.jpeg" alt="Módulo Laboratorio" class="project-thumbnail">
+                            </div>
+                            <div class="project-content">
+                                <h3>Módulo Laboratorio</h3>
+                                <p>Sistema completo de gestión de laboratorio médico con Firebase. Incluye gestión de pacientes, resultados, generación de PDFs y base de datos en tiempo real.</p>
+                                <div class="project-tags">
+                                    <span class="tag">JavaScript</span>
+                                    <span class="tag">Firestore</span>
+                                    <span class="tag">Realtime DB</span>
+                                    <span class="tag">PDF</span>
+                                </div>
+                                <div class="project-links">
+                                    <button class="btn btn-outline" onclick="openProjectModal('laboratorio')">
+                                        <i class="fas fa-info-circle"></i>
+                                        Más Info
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="img/jabones-captura1.png" alt="Tienda de Jabones" class="project-thumbnail">
+                            </div>
+                            <div class="project-content">
+                                <h3>Tienda de Jabones Artesanales</h3>
+                                <p>E-commerce completo de jabones artesanales desarrollado con React. Integra Firebase para gestión de productos, carrito de compras y autenticación de usuarios.</p>
+                                <div class="project-tags">
+                                    <span class="tag">React</span>
+                                    <span class="tag">Firebase</span>
+                                    <span class="tag">E-commerce</span>
+                                    <span class="tag">Responsive</span>
+                                </div>
+                                <div class="project-links">
+                                    <button class="btn btn-outline" onclick="openProjectModal('jabones')">
+                                        <i class="fas fa-info-circle"></i>
+                                        Más Info
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="img/backend1-1.png" alt="E-Commerce Backend API" class="project-thumbnail">
+                            </div>
+                            <div class="project-content">
+                                <h3>E-Commerce Backend API</h3>
+                                <p>API RESTful completa para e-commerce con Node.js y Express. Incluye gestión de productos y carritos, actualización en tiempo real con Socket.IO y persistencia en MongoDB.</p>
+                                <div class="project-tags">
+                                    <span class="tag">Node.js</span>
+                                    <span class="tag">Express</span>
+                                    <span class="tag">MongoDB</span>
+                                    <span class="tag">Socket.IO</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://github.com/SidraF94/EntregaFinal-Sidra" target="_blank" class="btn btn-secondary">
+                                        <i class="fab fa-github"></i>
+                                        Ver Código
+                                    </a>
+                                    <button class="btn btn-outline" onclick="openProjectModal('backend')">
+                                        <i class="fas fa-info-circle"></i>
+                                        Más Info
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="img/Backend2-1.png" alt="Sistema de Autenticación" class="project-thumbnail">
+                            </div>
+                            <div class="project-content">
+                                <h3>Sistema de Autenticación de Usuarios</h3>
+                                <p>Sistema completo de autenticación con Node.js y Express. Implementa JWT, Passport Local y GitHub OAuth con encriptación de contraseñas y gestión segura de sesiones.</p>
+                                <div class="project-tags">
+                                    <span class="tag">Node.js</span>
+                                    <span class="tag">Passport.js</span>
+                                    <span class="tag">JWT</span>
+                                    <span class="tag">OAuth</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://github.com/SidraF94/BackendII" target="_blank" class="btn btn-secondary">
+                                        <i class="fab fa-github"></i>
+                                        Ver Código
+                                    </a>
+                                    <button class="btn btn-outline" onclick="openProjectModal('auth')">
+                                        <i class="fas fa-info-circle"></i>
+                                        Más Info
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
                                                             <div class="project-image">
                                     <img src="img/gastronoguia-cap.png" alt="GastronoGuia" class="project-thumbnail">
                                 </div>
@@ -204,10 +310,6 @@
                                     <span class="tag">SweetAlert2</span>
                                 </div>
                                 <div class="project-links">
-                                    <a href="https://sidraf94.github.io/-NavegaLasRutas-Sidra-/" target="_blank" class="btn btn-primary">
-                                        <i class="fas fa-external-link-alt"></i>
-                                        Ver Demo
-                                    </a>
                                     <a href="https://github.com/SidraF94/-NavegaLasRutas-Sidra-" target="_blank" class="btn btn-secondary">
                                         <i class="fab fa-github"></i>
                                         Ver Código
@@ -218,221 +320,71 @@
                                     </button>
                                 </div>
                             </div>
-                                                    </div>
                         </div>
                     </div>
                 </div>
+                </div>
             </section>
 
-            <!-- Sección: Demo Interactivo -->
-            <section id="demo" class="section">
-                <div class="tech-demo-section">
-                    <div class="demo-header">
-                        <h2>Construye tu Formulario de Contacto</h2>
-                        <p>Arrastra los elementos al área del formulario para construirlo paso a paso</p>
+            <!-- Sección: Contacto -->
+            <section id="demo" class="section contact-section">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Contacto</h2>
+                        <p class="section-subtitle">¿Tienes un proyecto en mente? ¡Hablemos!</p>
                     </div>
                     
-                    <div class="demo-container">
-                        <!-- Panel izquierdo: Elementos arrastrables -->
-                        <div class="drag-elements">
-                            <h3>Elementos Disponibles</h3>
-                            <div class="drag-item" draggable="true" data-type="html" data-step="1">
-                                <div class="drag-icon">
-                                    <i class="fab fa-html5"></i>
-                                </div>
-                                <div class="drag-content">
-                                    <h4>HTML</h4>
-                                    <p>Estructura básica del formulario</p>
-                                    <small>Arrastra aquí para comenzar</small>
-                                </div>
-                                <div class="drag-status">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </div>
-                            
-                            <div class="drag-item" draggable="true" data-type="css" data-step="2">
-                                <div class="drag-icon">
-                                    <i class="fab fa-css3-alt"></i>
-                                </div>
-                                <div class="drag-content">
-                                    <h4>CSS</h4>
-                                    <p>Estilos y diseño visual</p>
-                                    <small>Bloqueado hasta agregar HTML</small>
-                                </div>
-                                <div class="drag-status">
-                                    <i class="fas fa-lock"></i>
-                                </div>
-                            </div>
-                            
-                            <div class="drag-item" draggable="true" data-type="js" data-step="3">
-                                <div class="drag-icon">
-                                    <i class="fab fa-js-square"></i>
-                                </div>
-                                <div class="drag-content">
-                                    <h4>JavaScript</h4>
-                                    <p>Funcionalidad e interactividad</p>
-                                    <small>Bloqueado hasta agregar CSS</small>
-                                </div>
-                                <div class="drag-status">
-                                    <i class="fas fa-lock"></i>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Panel central: Área de construcción -->
-                        <div class="build-area">
-                            <div class="build-header">
-                                <h3>Área de Construcción</h3>
-                                <div class="build-progress">
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" id="progress-fill"></div>
+                    <div class="contact-wrapper">
+                        <!-- Información de contacto -->
+                        <div class="contact-info-box">
+                            <h3>Información de Contacto</h3>
+                            <div class="contact-details">
+                                <div class="contact-item">
+                                    <i class="fas fa-envelope"></i>
+                                    <div>
+                                        <h4>Email</h4>
+                                        <a href="mailto:fer.sidra@gmail.com">fer.sidra@gmail.com</a>
                                     </div>
-                                    <span class="progress-text">0/3 elementos</span>
                                 </div>
-                            </div>
-                            
-                            <div class="drop-zone" id="drop-zone">
-                                <div class="drop-placeholder" id="drop-placeholder">
-                                    <i class="fas fa-hand-pointer"></i>
-                                    <p>Arrastra aquí el primer elemento (HTML)</p>
-                                    <small>El formulario se construirá paso a paso</small>
-                                </div>
-                                <div id="form-demo" class="form-demo" style="display: none;">
-                                <form class="contact-form raw-form" action="https://formspree.io/f/mdklavvo" method="POST" id="contact-form">
-                                    <div class="form-group">
-                                        <input type="text" name="nombre" placeholder="Nombre" required>
+                                <div class="contact-item">
+                                    <i class="fab fa-github"></i>
+                                    <div>
+                                        <h4>GitHub</h4>
+                                        <a href="https://github.com/SidraF94" target="_blank">github.com/SidraF94</a>
                                     </div>
-                                    <div class="form-group">
-                                        <input type="email" name="email" placeholder="Email" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <textarea name="mensaje" placeholder="Mensaje" rows="4" required></textarea>
-                                    </div>
-                                    <button type="submit" disabled>Enviar (No funcional aún)</button>
-                                </form>
-                            </div>
-                            </div>
-                            
-                            <div class="build-instructions">
-                                <div class="instruction" id="instruction-1">
-                                    <i class="fas fa-info-circle"></i>
-                                    <span>Comienza arrastrando HTML para crear la estructura básica</span>
                                 </div>
-                                <div class="instruction" id="instruction-2" style="display: none;">
-                                    <i class="fas fa-palette"></i>
-                                    <span>Ahora arrastra CSS para darle estilo al formulario</span>
-                                </div>
-                                <div class="instruction" id="instruction-3" style="display: none;">
-                                    <i class="fas fa-magic"></i>
-                                    <span>Finalmente arrastra JavaScript para la funcionalidad</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Panel derecho: Código y explicación -->
-                        <div class="code-panel">
-                            <div class="code-header">
-                                <h3>Código Agregado</h3>
-                                <div class="code-tabs">
-                                    <span class="tab active" data-tab="html">HTML</span>
-                                    <span class="tab" data-tab="css">CSS</span>
-                                    <span class="tab" data-tab="js">JS</span>
-                                </div>
-                            </div>
-                            
-                            <div class="code-content">
-                                <div id="html-code" class="code-block active">
-                                    <pre><code>&lt;form class="contact-form"&gt;
-  &lt;div class="form-group"&gt;
-    &lt;input type="text" placeholder="Nombre"&gt;
-  &lt;/div&gt;
-  &lt;div class="form-group"&gt;
-    &lt;input type="text" placeholder="Email"&gt;
-  &lt;/div&gt;
-  &lt;div class="form-group"&gt;
-    &lt;textarea placeholder="Mensaje"&gt;&lt;/textarea&gt;
-  &lt;/div&gt;
-  &lt;button type="submit"&gt;Enviar&lt;/button&gt;
-&lt;/form&gt;</code></pre>
-                                </div>
-                                
-                                <div id="css-code" class="code-block">
-                                    <pre><code>.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 2rem;
-  background: var(--bg-primary);
-  border: 2px solid var(--border-color);
-  border-radius: 12px;
-}
-
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 1rem;
-  border: 2px solid var(--border-color);
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}</code></pre>
-                                </div>
-                                
-                                <div id="js-code" class="code-block">
-                                    <pre><code>// Animación de entrada escalonada
-const inputs = document.querySelectorAll('.form-group input, .form-group textarea');
-inputs.forEach((input, index) => {
-  input.style.opacity = '0';
-  input.style.transform = 'translateY(20px)';
-  
-  setTimeout(() => {
-    input.style.transition = 'all 0.6s ease';
-    input.style.opacity = '1';
-    input.style.transform = 'translateY(0)';
-  }, index * 200);
-});
-
-// Funcionalidad de envío
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  // Lógica de envío aquí
-});</code></pre>
-                                </div>
-                                
-                                <div id="code-placeholder" class="code-placeholder">
+                                <div class="contact-item">
                                     <i class="fas fa-code"></i>
-                                    <p>Arrastra elementos para ver el código</p>
+                                    <div>
+                                        <h4>Disponible para</h4>
+                                        <p>Proyectos freelance y colaboraciones</p>
+                                    </div>
                                 </div>
-                            </div>
-                            
-                            <div class="reset-section">
-                                <button class="reset-btn" onclick="resetDragDemo()">
-                                    <i class="fas fa-redo"></i>
-                                    <span>Reiniciar Demo</span>
-                                </button>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- Información de contacto -->
-                    <div class="contact-info-section">
-                        <div class="contact-info">
-                            <div class="contact-item">
-                                <i class="fas fa-envelope"></i>
-                                <div>
-                                    <h4>Email</h4>
-                                    <p>fer.sidra@gmail.com</p>
+
+                        <!-- Formulario de contacto -->
+                        <div class="contact-form-box">
+                            <h3>Envíame un mensaje</h3>
+                            <form class="contact-form" action="https://formspree.io/f/mdklavvo" method="POST" id="contact-form">
+                                <div class="form-group">
+                                    <label for="nombre">Nombre</label>
+                                    <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
                                 </div>
-                            </div>
-                            <div class="contact-item">
-                                <i class="fas fa-code"></i>
-                                <div>
-                                    <h4>Disponible para</h4>
-                                    <p>Proyectos freelance y colaboraciones</p>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" name="email" placeholder="tu@email.com" required>
                                 </div>
-                            </div>
+                                <div class="form-group">
+                                    <label for="mensaje">Mensaje</label>
+                                    <textarea id="mensaje" name="mensaje" placeholder="Cuéntame sobre tu proyecto..." rows="5" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-submit">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Enviar Mensaje
+                                </button>
+                                <div class="form-status" id="form-status"></div>
+                            </form>
                         </div>
                     </div>
                 </div>

@@ -323,921 +323,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Funcionalidad para construir el formulario con Drag and Drop
-let htmlBuilt = false;
-let cssAdded = false;
-let jsAdded = false;
-let currentStep = 0;
-
-// Inicializar el sistema de drag and drop
-document.addEventListener('DOMContentLoaded', function() {
-    initDragAndDrop();
-    updateProgress();
-    updateInstructions();
-    initCodeTabs();
-});
-
-function initCodeTabs() {
-    const tabs = document.querySelectorAll('.tab');
-    
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            const tabType = this.getAttribute('data-tab');
-            showCodeTab(tabType);
-        });
-    });
-}
-
-function showCodeTab(tabType) {
-    const tabs = document.querySelectorAll('.tab');
-    const codeBlocks = document.querySelectorAll('.code-block');
-    
-    // Actualizar tabs
-    tabs.forEach(tab => {
-        if (tab.getAttribute('data-tab') === tabType) {
-            tab.classList.add('active');
-        } else {
-            tab.classList.remove('active');
-        }
-    });
-    
-    // Mostrar código correspondiente
-    codeBlocks.forEach(block => {
-        if (block.id === `${tabType}-code`) {
-            block.classList.add('active');
-        } else {
-            block.classList.remove('active');
-        }
-    });
-}
-
-function initDragAndDrop() {
-    const dragItems = document.querySelectorAll('.drag-item');
-    const dropZone = document.getElementById('drop-zone');
-    
-    // Configurar elementos arrastrables
-    dragItems.forEach(item => {
-        item.addEventListener('dragstart', handleDragStart);
-        item.addEventListener('dragend', handleDragEnd);
-        
-        // Bloquear CSS y JS inicialmente
-        if (item.dataset.type === 'css' || item.dataset.type === 'js') {
-            item.classList.add('locked');
-        }
-    });
-    
-    // Configurar zona de drop
-    dropZone.addEventListener('dragover', handleDragOver);
-    dropZone.addEventListener('drop', handleDrop);
-    dropZone.addEventListener('dragenter', handleDragEnter);
-    dropZone.addEventListener('dragleave', handleDragLeave);
-}
-
-function handleDragStart(e) {
-    const item = e.target.closest('.drag-item');
-    if (item.classList.contains('locked')) {
-        e.preventDefault();
-        return;
-    }
-    
-    e.dataTransfer.setData('text/plain', item.dataset.type);
-    item.style.opacity = '0.5';
-    
-    // Agregar clase de arrastre
-    document.body.classList.add('dragging');
-}
-
-function handleDragEnd(e) {
-    const item = e.target.closest('.drag-item');
-    item.style.opacity = '1';
-    document.body.classList.remove('dragging');
-}
-
-function handleDragOver(e) {
-    e.preventDefault();
-}
-
-function handleDragEnter(e) {
-    e.preventDefault();
-    const dropZone = e.target.closest('.drop-zone');
-    if (dropZone) {
-        dropZone.classList.add('drag-over');
-    }
-}
-
-function handleDragLeave(e) {
-    const dropZone = e.target.closest('.drop-zone');
-    if (dropZone && !dropZone.contains(e.relatedTarget)) {
-        dropZone.classList.remove('drag-over');
-    }
-}
-
-function handleDrop(e) {
-    e.preventDefault();
-    const dropZone = e.target.closest('.drop-zone');
-    dropZone.classList.remove('drag-over');
-    
-    const elementType = e.dataTransfer.getData('text/plain');
-    
-    if (canDropElement(elementType)) {
-        buildElement(elementType);
-    } else {
-        // No puedes agregar este elemento aún. Sigue el orden: HTML → CSS → JS
-    }
-}
-
-function canDropElement(elementType) {
-    switch(elementType) {
-        case 'html':
-            return !htmlBuilt;
-        case 'css':
-            return htmlBuilt && !cssAdded;
-        case 'js':
-            return htmlBuilt && cssAdded && !jsAdded;
-        default:
-            return false;
-    }
-}
-
-function buildElement(elementType) {
-    switch(elementType) {
-        case 'html':
-            buildHTML();
-            break;
-        case 'css':
-            buildCSS();
-            break;
-        case 'js':
-            buildJS();
-            break;
-    }
-}
-
-function buildHTML() {
-    const formDemo = document.getElementById('form-demo');
-    const dropPlaceholder = document.getElementById('drop-placeholder');
-    const htmlCode = document.getElementById('html-code');
-    const codePlaceholder = document.getElementById('code-placeholder');
-    
-    // Ocultar placeholder y mostrar formulario
-    dropPlaceholder.style.display = 'none';
-    formDemo.style.display = 'block';
-    
-    // El formulario ya está en el HTML, solo necesitamos mostrarlo
-    const form = formDemo.querySelector('.contact-form');
-    if (form) {
-        form.style.display = 'block';
-    }
-    
-    // Mostrar código HTML
-    codePlaceholder.style.display = 'none';
-    htmlCode.classList.add('active');
-    
-    // Marcar como completado
-    htmlBuilt = true;
-    currentStep = 1;
-    
-    // Actualizar estado del elemento HTML
-    updateDragItemStatus('html', 'completed');
-    
-    // Desbloquear CSS
-    unlockDragItem('css');
-    
-    // Actualizar progreso y instrucciones
-    updateProgress();
-    updateInstructions();
-    
-    // HTML construido exitosamente! ✅ Ahora puedes agregar estilos CSS
-}
-
-function buildCSS() {
-    if (!htmlBuilt) return;
-    
-    const formDemo = document.getElementById('form-demo');
-    const form = formDemo.querySelector('.contact-form');
-    const htmlCode = document.getElementById('html-code');
-    const cssCode = document.getElementById('css-code');
-    
-    // Ocultar código HTML y mostrar CSS
-    htmlCode.classList.remove('active');
-    cssCode.classList.add('active');
-    
-    // Remover la clase "raw-form" y aplicar estilos
-    form.classList.remove('raw-form');
-    
-    // Aplicar estilos CSS
-    form.style.cssText = `
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        max-width: 500px;
-        margin: 0 auto;
-        width: 100%;
-        background: var(--bg-primary);
-        border: 2px solid var(--border-color);
-        border-radius: 12px;
-        padding: 2rem;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    `;
-    
-    const inputs = form.querySelectorAll('input, textarea');
-    inputs.forEach(input => {
-        input.style.cssText = `
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            font-family: inherit;
-        `;
-    });
-    
-    const button = form.querySelector('button');
-    button.style.cssText = `
-        background: var(--gradient-primary);
-        color: white;
-        border: none;
-        padding: 1rem 2rem;
-        border-radius: 8px;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-family: inherit;
-        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-    `;
-    
-    // Marcar como completado
-    cssAdded = true;
-    currentStep = 2;
-    
-    // Actualizar estado del elemento CSS
-    updateDragItemStatus('css', 'completed');
-    
-    // Desbloquear JavaScript
-    unlockDragItem('js');
-    
-    // Actualizar progreso y instrucciones
-    updateProgress();
-    updateInstructions();
-    
-    // CSS agregado exitosamente! 🎨 ¡Ahora puedes agregar JavaScript!
-}
-
-function buildJS() {
-    if (!htmlBuilt || !cssAdded) return;
-    
-    const formDemo = document.getElementById('form-demo');
-    const form = formDemo.querySelector('.contact-form');
-    const inputs = formDemo.querySelectorAll('input, textarea, button');
-    const cssCode = document.getElementById('css-code');
-    const jsCode = document.getElementById('js-code');
-    
-    // Ocultar código CSS y mostrar JavaScript
-    cssCode.classList.remove('active');
-    jsCode.classList.add('active');
-    
-    // Remover estilos inline y usar CSS personalizado
-    form.style.cssText = '';
-    form.classList.remove('raw-form');
-    
-    // Agregar sistema de burbujas
-    createBubbleSystem(form);
-    
-    // Animación de entrada escalonada mejorada
-    inputs.forEach((input, index) => {
-        input.style.opacity = '0';
-        input.style.transform = 'translateY(30px)';
-        input.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-        
-        setTimeout(() => {
-            input.style.opacity = '1';
-            input.style.transform = 'translateY(0)';
-        }, index * 250);
-    });
-    
-    // Mejorar estilos de inputs
-    inputs.forEach(input => {
-        if (input.tagName !== 'BUTTON') {
-            input.style.cssText = `
-                width: 100%;
-                padding: 1.25rem;
-                border: 2px solid var(--border-color);
-                border-radius: 12px;
-                font-size: 1rem;
-                transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                background-color: var(--bg-primary);
-                color: var(--text-primary);
-                font-family: inherit;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            `;
-        }
-    });
-    
-    // Mejorar estilos del botón
-    const button = formDemo.querySelector('button');
-    button.style.cssText = `
-        background: var(--gradient-primary);
-        color: white;
-        border: none;
-        padding: 1.25rem 2.5rem;
-        border-radius: 12px;
-        font-size: 1.1rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        font-family: inherit;
-        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
-        position: relative;
-        overflow: hidden;
-    `;
-    
-    // Efectos del botón (simplificados)
-    button.addEventListener('mouseenter', () => {
-        button.style.transform = 'translateY(-2px)';
-        button.style.boxShadow = '0 10px 25px rgba(99, 102, 241, 0.4)';
-    });
-    
-    button.addEventListener('mouseleave', () => {
-        button.style.transform = 'translateY(0)';
-        button.style.boxShadow = '0 8px 25px rgba(99, 102, 241, 0.3)';
-    });
-    
-    // Efectos de focus mejorados
-    inputs.forEach(input => {
-        if (input.tagName !== 'BUTTON') {
-            input.addEventListener('focus', () => {
-                input.style.outline = 'none';
-                input.style.borderColor = 'var(--primary-color)';
-                input.style.boxShadow = '0 0 0 4px rgba(99, 102, 241, 0.15)';
-                input.style.transform = 'scale(1.02) translateY(-2px)';
-                input.style.boxShadow = '0 8px 25px rgba(99, 102, 241, 0.2)';
-            });
-            
-            input.addEventListener('blur', () => {
-                input.style.borderColor = 'var(--border-color)';
-                input.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
-                input.style.transform = 'scale(1) translateY(0)';
-            });
-        }
-    });
-    
-    // Habilitar el botón de envío
-    button.disabled = false;
-    button.textContent = 'Enviar Mensaje';
-    
-    // Funcionalidad de envío mejorada
-    form.addEventListener('submit', handleFormSubmit);
-    
-    // Marcar como completado
-    jsAdded = true;
-    currentStep = 3;
-    
-    // Actualizar estado del elemento JavaScript
-    updateDragItemStatus('js', 'completed');
-    
-    // Actualizar progreso y instrucciones
-    updateProgress();
-    updateInstructions();
-    
-    // JavaScript agregado exitosamente! ⚡ ¡Burbujas animadas y funcionalidad completa!
-}
-
-// Sistema orgánico de círculos que aparecen y desaparecen
-function createBubbleSystem(form) {
-    const bubbleContainer = document.createElement('div');
-    bubbleContainer.className = 'bubble-container';
-    bubbleContainer.style.cssText = `
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        pointer-events: none;
-        z-index: 1;
-        overflow: hidden;
-    `;
-    
-    form.appendChild(bubbleContainer);
-    
-    // Crear círculos iniciales
-    for (let i = 0; i < 12; i++) {
-        createBubble(bubbleContainer);
-    }
-    
-    // Sistema orgánico: reemplazar círculos que desaparecen
-    setInterval(() => {
-        // Remover un círculo aleatorio con desvanecimiento suave
-        const bubbles = bubbleContainer.querySelectorAll('div');
-        if (bubbles.length > 0) {
-            const randomBubble = bubbles[Math.floor(Math.random() * bubbles.length)];
-            
-            // Desvanecimiento muy suave
-            randomBubble.style.transition = 'all 3s ease-in-out';
-            randomBubble.style.opacity = '0';
-            randomBubble.style.transform = 'scale(0.5)';
-            randomBubble.style.filter = 'blur(10px)';
-            
-            // Remover después del desvanecimiento completo
-            setTimeout(() => {
-                if (randomBubble.parentNode) {
-                    randomBubble.remove();
-                }
-                
-                // Crear uno nuevo en posición aleatoria
-                setTimeout(() => {
-                    createBubble(bubbleContainer);
-                }, 500); // Delay para efecto natural
-            }, 3000); // Esperar 3 segundos para el desvanecimiento completo
-        }
-    }, 4000); // Cada 4 segundos para dar más tiempo
-}
-
-function createBubble(container) {
-    const bubble = document.createElement('div');
-    const size = Math.random() * 120 + 40; // 40px a 160px (más variado)
-    
-    // Generar posición aleatoria con margen para evitar bordes
-    const margin = 10; // Margen del 10% para evitar que se corten en los bordes
-    const startX = margin + Math.random() * (100 - 2 * margin);
-    const startY = margin + Math.random() * (100 - 2 * margin);
-    
-    // Colores aleatorios para las sombras (más variados e intensos)
-    const colors = [
-        'rgba(99, 102, 241, 0.9)',    // Azul
-        'rgba(236, 72, 153, 0.9)',    // Rosa
-        'rgba(34, 197, 94, 0.9)',     // Verde
-        'rgba(245, 158, 11, 0.9)',    // Amarillo
-        'rgba(239, 68, 68, 0.9)',     // Rojo
-        'rgba(168, 85, 247, 0.9)',    // Púrpura
-        'rgba(6, 182, 212, 0.9)',     // Cian
-        'rgba(251, 146, 60, 0.9)',    // Naranja
-        'rgba(139, 92, 246, 0.9)',    // Violeta
-        'rgba(16, 185, 129, 0.9)',    // Esmeralda
-        'rgba(249, 115, 22, 0.9)',    // Naranja intenso
-        'rgba(220, 38, 127, 0.9)',    // Rosa intenso
-        'rgba(59, 130, 246, 0.9)',    // Azul intenso
-        'rgba(16, 185, 129, 0.9)'     // Verde intenso
-    ];
-    
-    const randomColor = colors[Math.floor(Math.random() * colors.length)];
-    const blurRadius = Math.random() * 80 + 20; // 20px a 100px de blur (más variado)
-    
-    // Animaciones aleatorias para variedad
-    const animations = ['shadowFloat', 'shadowPulse'];
-    const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
-    const animationDuration = Math.random() * 10 + 4; // 4-14 segundos (más variado)
-    const animationDelay = Math.random() * 6; // Delay aleatorio 0-6 segundos
-    
-    bubble.style.cssText = `
-        position: absolute;
-        width: ${size}px;
-        height: ${size}px;
-        background: ${randomColor};
-        border-radius: 50%;
-        left: ${startX}%;
-        top: ${startY}%;
-        filter: blur(${blurRadius}px);
-        z-index: 1;
-        opacity: 0;
-        transition: opacity 2s ease-in-out, transform 2s ease-in-out;
-        transform: scale(0.8);
-        box-shadow: 0 0 40px ${randomColor}, 0 0 80px ${randomColor};
-        animation: ${randomAnimation} ${animationDuration}s ease-in-out infinite;
-        animation-delay: ${animationDelay}s;
-    `;
-    
-    container.appendChild(bubble);
-    
-    // Efecto de aparición muy suave
-    setTimeout(() => {
-        bubble.style.opacity = '0.9';
-        bubble.style.transform = 'scale(1)';
-    }, 200);
-}
-
-// Función para redistribuir los círculos existentes (ya no se usa)
-// function redistributeBubbles(container) { ... }
-
-// Función mejorada para manejar el envío del formulario
-function handleFormSubmit(e) {
-    e.preventDefault();
-    
-    const form = e.target;
-    const button = form.querySelector('button');
-    
-    // Validar campos
-    const nameInput = form.querySelector('input[name="nombre"]');
-    const emailInput = form.querySelector('input[name="email"]');
-    const messageInput = form.querySelector('textarea[name="mensaje"]');
-    
-    if (!nameInput.value.trim() || !emailInput.value.trim() || !messageInput.value.trim()) {
-        // Por favor completa todos los campos correctamente
-        return;
-    }
-    
-    // Validar email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(emailInput.value)) {
-        // Por favor ingresa un email válido
-        return;
-    }
-    
-    // Animación de envío mejorada
-    button.style.transform = 'scale(0.95)';
-    button.textContent = 'Enviando...';
-    button.disabled = true;
-    
-    // Crear FormData para enviar
-    const formData = new FormData(form);
-    
-    // Enviar a Formspree
-    fetch('https://formspree.io/f/mdklavvo', {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            // Éxito
-            button.style.transform = 'scale(1)';
-            button.textContent = '¡Enviado! 🎉';
-            button.style.background = 'linear-gradient(45deg, #10b981, #059669)';
-            button.style.boxShadow = '0 8px 25px rgba(16, 185, 129, 0.4)';
-            
-            // Mostrar mensaje de éxito
-            showSuccessMessage(form);
-            
-            // Limpiar formulario
-            setTimeout(() => {
-                form.reset();
-                button.textContent = 'Enviar Mensaje';
-                button.style.background = 'var(--gradient-primary)';
-                button.style.boxShadow = '0 8px 25px rgba(99, 102, 241, 0.3)';
-                button.disabled = false;
-            }, 3000);
-            
-                            // ¡Mensaje enviado exitosamente! 🚀
-        } else {
-            throw new Error('Error en el envío');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        handleSubmitError(button);
-    });
-}
-
-function showSuccessMessage(form) {
-    const successMessage = document.createElement('div');
-    successMessage.className = 'success-message';
-    successMessage.innerHTML = `
-        <i class="fas fa-check-circle"></i>
-        <p>¡Mensaje enviado exitosamente!</p>
-        <small>Gracias por contactarme, te responderé pronto.</small>
-    `;
-    successMessage.style.cssText = `
-        background: linear-gradient(135deg, #10b981, #059669);
-        color: white;
-        padding: 1.5rem;
-        border-radius: 12px;
-        text-align: center;
-        margin-top: 1.5rem;
-        animation: fadeIn 0.6s ease;
-        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
-        font-weight: 500;
-    `;
-    
-    form.appendChild(successMessage);
-}
-
-function handleSubmitError(button) {
-    button.style.transform = 'scale(1)';
-    button.textContent = 'Error ❌';
-    button.style.background = 'linear-gradient(45deg, #ef4444, #dc2626)';
-    button.style.boxShadow = '0 8px 25px rgba(239, 68, 68, 0.4)';
-    button.disabled = false;
-    
-    setTimeout(() => {
-        button.textContent = 'Enviar Mensaje';
-        button.style.background = 'var(--gradient-primary)';
-        button.style.boxShadow = '0 8px 25px rgba(99, 102, 241, 0.3)';
-    }, 2000);
-    
-                // Error al enviar el mensaje. Intenta nuevamente.
-}
-
-// Funciones auxiliares para el sistema de drag and drop
-function updateDragItemStatus(elementType, status) {
-    const dragItem = document.querySelector(`[data-type="${elementType}"]`);
-    if (dragItem) {
-        dragItem.classList.remove('locked', 'completed');
-        dragItem.classList.add(status);
-        
-        // Actualizar el ícono de estado
-        const statusIcon = dragItem.querySelector('.drag-status i');
-        if (status === 'completed') {
-            statusIcon.className = 'fas fa-check';
-        } else if (status === 'locked') {
-            statusIcon.className = 'fas fa-lock';
-        } else {
-            statusIcon.className = 'fas fa-arrow-right';
-        }
-    }
-}
-
-function unlockDragItem(elementType) {
-    const dragItem = document.querySelector(`[data-type="${elementType}"]`);
-    if (dragItem) {
-        dragItem.classList.remove('locked');
-        dragItem.classList.add('unlocked');
-        
-        // Actualizar el ícono de estado
-        const statusIcon = dragItem.querySelector('.drag-status i');
-        statusIcon.className = 'fas fa-arrow-right';
-        
-        // Actualizar el texto
-        const smallText = dragItem.querySelector('.drag-content small');
-        if (elementType === 'css') {
-            smallText.textContent = 'Arrastra aquí para agregar estilos';
-        } else if (elementType === 'js') {
-            smallText.textContent = 'Arrastra aquí para agregar funcionalidad';
-        }
-    }
-}
-
-function updateProgress() {
-    const progressFill = document.getElementById('progress-fill');
-    const progressText = document.querySelector('.progress-text');
-    
-    const totalSteps = 3;
-    const completedSteps = [htmlBuilt, cssAdded, jsAdded].filter(Boolean).length;
-    const percentage = (completedSteps / totalSteps) * 100;
-    
-    if (progressFill) {
-        progressFill.style.width = `${percentage}%`;
-    }
-    
-    if (progressText) {
-        progressText.textContent = `${completedSteps}/${totalSteps} elementos`;
-    }
-}
-
-function updateInstructions() {
-    const instructions = document.querySelectorAll('.instruction');
-    
-    instructions.forEach((instruction, index) => {
-        if (index + 1 === currentStep + 1) {
-            instruction.classList.add('active');
-            instruction.style.display = 'flex';
-        } else if (index + 1 <= currentStep) {
-            instruction.classList.remove('active');
-            instruction.style.display = 'none';
-        } else {
-            instruction.classList.remove('active');
-            instruction.style.display = 'none';
-        }
-    });
-}
-
-// Función para resetear el demo de drag and drop
-window.resetDragDemo = function() {
-    // Resetear estados
-    htmlBuilt = false;
-    cssAdded = false;
-    jsAdded = false;
-    currentStep = 0;
-    
-    // Resetear elementos arrastrables
-    const dragItems = document.querySelectorAll('.drag-item');
-    dragItems.forEach((item, index) => {
-        item.classList.remove('completed', 'unlocked');
-        if (index === 0) {
-            item.classList.remove('locked');
-            const statusIcon = item.querySelector('.drag-status i');
-            statusIcon.className = 'fas fa-arrow-right';
-            const smallText = item.querySelector('.drag-content small');
-            smallText.textContent = 'Arrastra aquí para comenzar';
-        } else {
-            item.classList.add('locked');
-            const statusIcon = item.querySelector('.drag-status i');
-            statusIcon.className = 'fas fa-lock';
-            const smallText = item.querySelector('.drag-content small');
-            if (index === 1) {
-                smallText.textContent = 'Bloqueado hasta agregar HTML';
-            } else {
-                smallText.textContent = 'Bloqueado hasta agregar CSS';
-            }
-        }
-    });
-    
-    // Resetear área de construcción
-    const dropPlaceholder = document.getElementById('drop-placeholder');
-    const formDemo = document.getElementById('form-demo');
-    
-    dropPlaceholder.style.display = 'block';
-    formDemo.style.display = 'none';
-    
-    // Restaurar el formulario original
-    formDemo.innerHTML = `
-        <form class="contact-form raw-form" action="https://formspree.io/f/mdklavvo" method="POST" id="contact-form">
-            <div class="form-group">
-                <input type="text" name="nombre" placeholder="Nombre" required>
-            </div>
-            <div class="form-group">
-                <input type="email" name="email" placeholder="Email" required>
-            </div>
-            <div class="form-group">
-                <textarea name="mensaje" placeholder="Mensaje" rows="4" required></textarea>
-            </div>
-            <button type="submit" disabled>Enviar (No funcional aún)</button>
-        </form>
-    `;
-    
-    // Resetear código
-    const codePlaceholder = document.getElementById('code-placeholder');
-    const codeBlocks = document.querySelectorAll('.code-block');
-    
-    codePlaceholder.style.display = 'block';
-    codeBlocks.forEach(block => block.classList.remove('active'));
-    
-    // Resetear progreso
-    updateProgress();
-    updateInstructions();
-    
-    // Demo reseteado! 🔄 Puedes empezar de nuevo
-}
-
-// Función para actualizar el indicador de pasos
-function updateStepIndicator(step) {
-    const steps = document.querySelectorAll('.step');
-    const tabs = document.querySelectorAll('.tab');
-    
-    steps.forEach((stepEl, index) => {
-        if (index + 1 <= step) {
-            stepEl.classList.add('completed');
-            stepEl.classList.remove('active');
-        } else if (index + 1 === step + 1) {
-            stepEl.classList.add('active');
-            stepEl.classList.remove('completed');
-        } else {
-            stepEl.classList.remove('active', 'completed');
-        }
-    });
-    
-    // Actualizar tabs activos
-    if (step === 1) {
-        tabs[0].classList.add('active');
-        tabs[1].classList.remove('active');
-        tabs[2].classList.remove('active');
-    } else if (step === 2) {
-        tabs[0].classList.remove('active');
-        tabs[1].classList.add('active');
-        tabs[2].classList.remove('active');
-    } else if (step === 3) {
-        tabs[0].classList.remove('active');
-        tabs[1].classList.remove('active');
-        tabs[2].classList.add('active');
-    }
-}
-
-// Función para resetear el demo
-window.resetDemo = function() {
-    // Resetear estados
-    htmlBuilt = false;
-    cssAdded = false;
-    jsAdded = false;
-    
-    // Resetear botones
-    document.getElementById('html-btn').disabled = false;
-    document.getElementById('css-btn').disabled = true;
-    document.getElementById('js-btn').disabled = true;
-    
-    // Resetear contenido de botones
-    document.getElementById('html-btn').innerHTML = '<i class="fab fa-html5"></i><span>HTML</span>';
-    document.getElementById('css-btn').innerHTML = '<i class="fab fa-css3-alt"></i><span>CSS</span>';
-    document.getElementById('js-btn').innerHTML = '<i class="fab fa-js-square"></i><span>JavaScript</span>';
-    
-    // Resetear estilos de botones
-    document.getElementById('js-btn').style = '';
-    
-    // Ocultar todos los códigos y mostrar placeholder
-    document.getElementById('html-code').classList.remove('active');
-    document.getElementById('css-code').classList.remove('active');
-    document.getElementById('js-code').classList.remove('active');
-    document.getElementById('code-placeholder').style.display = 'block';
-    
-    // Resetear tabs activos
-    const tabs = document.querySelectorAll('.tab');
-    tabs.forEach(tab => tab.classList.remove('active'));
-    document.querySelector('[data-tab="html"]').classList.add('active');
-    
-    // Resetear indicador de pasos
-    updateStepIndicator(0);
-    
-    // Resetear estado
-    document.getElementById('demo-status').textContent = 'Esperando...';
-    document.getElementById('demo-status').className = 'status';
-    
-    // Resetear formulario
-    document.getElementById('form-demo').innerHTML = `
-        <div class="demo-placeholder">
-            <i class="fas fa-edit"></i>
-            <p>El formulario aparecerá aquí</p>
-        </div>
-    `;
-    
-    // Demo reseteado! 🔄 Puedes empezar de nuevo
-}
-
-// Agregar funcionalidad a los tabs
-document.addEventListener('DOMContentLoaded', function() {
-    const tabs = document.querySelectorAll('.tab');
-    
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            const tabType = this.getAttribute('data-tab');
-            
-            // Solo permitir ver tabs de pasos completados
-            if (tabType === 'html' && htmlBuilt) {
-                showTab('html');
-            } else if (tabType === 'css' && cssAdded) {
-                showTab('css');
-            } else if (tabType === 'js' && jsAdded) {
-                showTab('js');
-            }
-        });
-    });
-});
-
-function showTab(tabType) {
-    const tabs = document.querySelectorAll('.tab');
-    const codeBlocks = document.querySelectorAll('.code-block');
-    
-    // Actualizar tabs
-    tabs.forEach(tab => {
-        if (tab.getAttribute('data-tab') === tabType) {
-            tab.classList.add('active');
-        } else {
-            tab.classList.remove('active');
-        }
-    });
-    
-    // Mostrar código correspondiente
-    codeBlocks.forEach(block => {
-        if (block.id === `${tabType}-code`) {
-            block.classList.add('active');
-        } else {
-            block.classList.remove('active');
-        }
-    });
-}
-
-window.showMessage = function(message) {
-    const formDemo = document.getElementById('form-demo');
-    const messageDiv = document.createElement('div');
-    messageDiv.className = 'build-message';
-    messageDiv.textContent = message;
-    messageDiv.style.cssText = `
-        position: absolute;
-        top: -40px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: var(--primary-color);
-        color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-size: 0.875rem;
-        font-weight: 500;
-        z-index: 1000;
-        animation: slideDown 0.5s ease;
-    `;
-    
-    formDemo.style.position = 'relative';
-    formDemo.appendChild(messageDiv);
-    
-    setTimeout(() => {
-        messageDiv.remove();
-    }, 3000);
-}
-
-// Agregar estilos para la animación del mensaje
-const messageStyles = `
-    @keyframes slideDown {
-        from { transform: translateX(-50%) translateY(-20px); opacity: 0; }
-        to { transform: translateX(-50%) translateY(0); opacity: 1; }
-    }
-`;
-
-const messageStyleSheet = document.createElement('style');
-messageStyleSheet.textContent = messageStyles;
-document.head.appendChild(messageStyleSheet);
-
 // Funcionalidad del modo nocturno
 const themeToggle = document.getElementById('theme-toggle');
 const themeIcon = themeToggle.querySelector('i');
@@ -1300,6 +385,14 @@ function initHandwritingEffect() {
                 title.style.animation = 'writeComplete 0.5s ease-in-out';
                 // Ocultar el cursor después de completar
                 title.style.setProperty('--cursor-opacity', '0');
+                
+                // Mostrar la imagen después de completar la escritura
+                setTimeout(() => {
+                    const heroImage = document.querySelector('.hero-image');
+                    if (heroImage) {
+                        heroImage.classList.add('show');
+                    }
+                }, 300);
             }, 500);
         }
     }
@@ -1511,7 +604,6 @@ window.openProjectModal = function(projectType) {
                         </div>
                         
                         <div class="project-links">
-                            <a href="https://sidraf94.github.io/-NavegaLasRutas-Sidra-/" target="_blank" class="btn btn-primary">Ver Demo Live</a>
                             <a href="https://github.com/SidraF94/-NavegaLasRutas-Sidra-" target="_blank" class="btn btn-secondary">Ver Código</a>
                         </div>
                         
@@ -1519,6 +611,226 @@ window.openProjectModal = function(projectType) {
                             <h4>Vista Previa</h4>
                             <div class="live-preview-container">
                                 <img src="img/captura-react.png" alt="Preview Tienda Emoji" class="project-preview-image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            break;
+            
+        case 'jabones':
+            content = `
+                <h2>Tienda de Jabones Artesanales</h2>
+                <div class="project-modal-content-wide">
+                    <div class="project-details">
+                        <h4>Descripción</h4>
+                        <p>E-commerce completo de jabones artesanales desarrollado con React y Firebase. Incluye catálogo de productos con categorías, sistema de carrito de compras, autenticación de usuarios y gestión de stock en tiempo real.</p>
+                        
+                        <h4>Características</h4>
+                        <ul>
+                            <li>Catálogo de productos dinámico con Firebase Firestore</li>
+                            <li>Sistema de carrito de compras completo</li>
+                            <li>Filtrado por categorías de productos</li>
+                            <li>Gestión de stock en tiempo real</li>
+                            <li>Diseño responsive y atractivo con temática natural</li>
+                            <li>Sección "Sobre Nosotros" con valores de la empresa</li>
+                            <li>Formulario de contacto funcional</li>
+                            <li>Autenticación de usuarios</li>
+                        </ul>
+                        
+                        <h4>Tecnologías</h4>
+                        <div class="tech-tags">
+                            <span class="tag">React</span>
+                            <span class="tag">Firebase</span>
+                            <span class="tag">Firestore</span>
+                            <span class="tag">JavaScript ES6+</span>
+                            <span class="tag">CSS3</span>
+                            <span class="tag">Responsive Design</span>
+                        </div>
+                        
+                        <div class="live-preview-section">
+                            <h4>Capturas del Proyecto</h4>
+                            <div class="project-gallery">
+                                <div class="gallery-item">
+                                    <img src="img/jabones-captura1.png" alt="Página principal de la tienda" class="project-preview-image">
+                                    <p class="gallery-caption">Página principal con catálogo de productos</p>
+                                </div>
+                                <div class="gallery-item">
+                                    <img src="img/jabones-captura2.png" alt="Sección Sobre Nosotros" class="project-preview-image">
+                                    <p class="gallery-caption">Sección "Sobre Nosotros" - Valores de la empresa</p>
+                                </div>
+                                <div class="gallery-item">
+                                    <img src="img/jabones-captura3.png" alt="Formulario de contacto" class="project-preview-image">
+                                    <p class="gallery-caption">Formulario de contacto</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            break;
+            
+        case 'laboratorio':
+            content = `
+                <h2>Módulo Laboratorio</h2>
+                <div class="project-modal-content-wide">
+                    <div class="project-details">
+                        <h4>Descripción</h4>
+                        <p>Sistema integral de gestión de laboratorio médico desarrollado con JavaScript y Firebase. Permite administrar pacientes, registrar análisis, consultar resultados y generar informes en PDF. Utiliza Firestore para datos estructurados y Realtime Database para sincronización en tiempo real.</p>
+                        
+                        <h4>Características</h4>
+                        <ul>
+                            <li>Gestión completa de pacientes y fichas médicas</li>
+                            <li>Registro y seguimiento de análisis de laboratorio</li>
+                            <li>Consulta de resultados en tiempo real</li>
+                            <li>Generación automática de informes en PDF</li>
+                            <li>Base de datos Firestore para información estructurada</li>
+                            <li>Realtime Database para actualizaciones instantáneas</li>
+                            <li>Sistema de búsqueda y filtrado de registros</li>
+                            <li>Interfaz intuitiva y responsive</li>
+                        </ul>
+                        
+                        <h4>Tecnologías</h4>
+                        <div class="tech-tags">
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">Firebase</span>
+                            <span class="tag">Firestore</span>
+                            <span class="tag">Realtime Database</span>
+                            <span class="tag">PDF Generation</span>
+                            <span class="tag">HTML5</span>
+                            <span class="tag">CSS3</span>
+                        </div>
+                        
+                        <div class="live-preview-section">
+                            <h4>Capturas del Sistema</h4>
+                            <div class="project-gallery">
+                                <div class="gallery-item">
+                                    <img src="img/modulolaboratorio1.jpeg" alt="Panel principal del sistema" class="project-preview-image">
+                                    <p class="gallery-caption">Panel principal de administración</p>
+                                </div>
+                                <div class="gallery-item">
+                                    <img src="img/modulolaboratorio2.jpeg" alt="Gestión de pacientes" class="project-preview-image">
+                                    <p class="gallery-caption">Módulo de gestión de pacientes</p>
+                                </div>
+                                <div class="gallery-item">
+                                    <img src="img/modulolaboratorio3.jpeg" alt="Registro de análisis" class="project-preview-image">
+                                    <p class="gallery-caption">Registro de análisis de laboratorio</p>
+                                </div>
+                                <div class="gallery-item">
+                                    <img src="img/modulolaboratorio4.jpeg" alt="Consulta de resultados" class="project-preview-image">
+                                    <p class="gallery-caption">Consulta de resultados</p>
+                                </div>
+                                <div class="gallery-item">
+                                    <img src="img/modulolaboratorio5.jpeg" alt="Generación de informes" class="project-preview-image">
+                                    <p class="gallery-caption">Generación de informes en PDF</p>
+                                </div>
+                                <div class="gallery-item">
+                                    <img src="img/modulolaboratorio6.jpeg" alt="PDF generado" class="project-preview-image">
+                                    <p class="gallery-caption">PDF generado automáticamente</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            break;
+            
+        case 'backend':
+            content = `
+                <h2>E-Commerce Backend API</h2>
+                <div class="project-modal-content-wide">
+                    <div class="project-details">
+                        <h4>Descripción</h4>
+                        <p>API RESTful completa para sistema de e-commerce desarrollada con Node.js y Express. Incluye gestión de productos y carritos, actualización en tiempo real con WebSockets, y persistencia de datos en MongoDB con vistas dinámicas renderizadas en el servidor.</p>
+                        
+                        <h4>Características</h4>
+                        <ul>
+                            <li>API REST completa para productos y carritos (CRUD)</li>
+                            <li>Actualización en tiempo real con Socket.IO</li>
+                            <li>Paginación avanzada con filtros y ordenamiento</li>
+                            <li>Sistema de carga de imágenes con Multer</li>
+                            <li>Vistas dinámicas con Handlebars</li>
+                            <li>Arquitectura modular (Models, Managers, Routes, Middleware)</li>
+                            <li>Manejo de errores centralizado</li>
+                            <li>Integración con MongoDB mediante Mongoose</li>
+                        </ul>
+                        
+                        <h4>Tecnologías</h4>
+                        <div class="tech-tags">
+                            <span class="tag">Node.js</span>
+                            <span class="tag">Express.js</span>
+                            <span class="tag">MongoDB</span>
+                            <span class="tag">Mongoose</span>
+                            <span class="tag">Socket.IO</span>
+                            <span class="tag">Handlebars</span>
+                            <span class="tag">Multer</span>
+                        </div>
+                        
+                        <div class="project-links">
+                            <a href="https://github.com/SidraF94/EntregaFinal-Sidra" target="_blank" class="btn btn-secondary">Ver Código en GitHub</a>
+                        </div>
+                        
+                        <div class="live-preview-section">
+                            <h4>Capturas del Proyecto</h4>
+                            <div class="project-gallery">
+                                <div class="gallery-item">
+                                    <img src="img/backend1-1.png" alt="Vista de productos con paginación" class="project-preview-image">
+                                    <p class="gallery-caption">Vista de productos con paginación y filtros</p>
+                                </div>
+                                <div class="gallery-item">
+                                    <img src="img/backend1-2.png" alt="Panel de administración" class="project-preview-image">
+                                    <p class="gallery-caption">Panel de administración en tiempo real</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            break;
+            
+        case 'auth':
+            content = `
+                <h2>Sistema de Autenticación de Usuarios</h2>
+                <div class="project-modal-content-wide">
+                    <div class="project-details">
+                        <h4>Descripción</h4>
+                        <p>Sistema de autenticación completo con Node.js y Express que implementa múltiples estrategias de autenticación. Incluye registro y login de usuarios, protección de rutas con JWT, gestión de sesiones seguras y autenticación social con GitHub OAuth.</p>
+                        
+                        <h4>Características</h4>
+                        <ul>
+                            <li>Registro y login de usuarios con validación</li>
+                            <li>Autenticación local y GitHub OAuth</li>
+                            <li>Protección de rutas con JWT</li>
+                            <li>Gestión de sesiones seguras</li>
+                            <li>Encriptación de contraseñas con bcrypt</li>
+                            <li>Interfaz web con Handlebars</li>
+                            <li>API RESTful</li>
+                            <li>Variables de entorno seguras</li>
+                        </ul>
+                        
+                        <h4>Tecnologías</h4>
+                        <div class="tech-tags">
+                            <span class="tag">Node.js</span>
+                            <span class="tag">Express.js</span>
+                            <span class="tag">MongoDB</span>
+                            <span class="tag">Mongoose</span>
+                            <span class="tag">Passport.js</span>
+                            <span class="tag">JWT</span>
+                            <span class="tag">bcrypt</span>
+                            <span class="tag">Handlebars</span>
+                        </div>
+                        
+                        <div class="project-links">
+                            <a href="https://github.com/SidraF94/BackendII" target="_blank" class="btn btn-secondary">Ver Código en GitHub</a>
+                        </div>
+                        
+                        <div class="live-preview-section">
+                            <h4>Captura del Proyecto</h4>
+                            <div class="project-gallery">
+                                <div class="gallery-item">
+                                    <img src="img/Backend2-1.png" alt="Panel de usuario autenticado" class="project-preview-image">
+                                    <p class="gallery-caption">Panel de usuario autenticado con datos de sesión</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1547,6 +859,54 @@ document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         const modal = document.getElementById('project-modal');
         modal.style.display = 'none';
+        
+        // Cerrar lightbox si está abierto
+        const lightbox = document.querySelector('.image-lightbox');
+        if (lightbox) {
+            lightbox.classList.remove('active');
+        }
+    }
+});
+
+// Función para crear y mostrar lightbox de imágenes
+function createImageLightbox() {
+    // Verificar si ya existe el lightbox
+    let lightbox = document.querySelector('.image-lightbox');
+    if (!lightbox) {
+        lightbox = document.createElement('div');
+        lightbox.className = 'image-lightbox';
+        lightbox.innerHTML = `
+            <div class="lightbox-content">
+                <button class="lightbox-close">&times;</button>
+                <img src="" alt="Vista ampliada">
+            </div>
+        `;
+        document.body.appendChild(lightbox);
+        
+        // Cerrar al hacer clic en el fondo
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+            }
+        });
+        
+        // Cerrar con el botón
+        const closeBtn = lightbox.querySelector('.lightbox-close');
+        closeBtn.addEventListener('click', function() {
+            lightbox.classList.remove('active');
+        });
+    }
+    return lightbox;
+}
+
+// Agregar evento de clic a todas las imágenes de proyectos
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('project-preview-image')) {
+        const lightbox = createImageLightbox();
+        const img = lightbox.querySelector('img');
+        img.src = e.target.src;
+        img.alt = e.target.alt;
+        lightbox.classList.add('active');
     }
 });
 
@@ -1569,90 +929,82 @@ window.scrollToSection = function(sectionName) {
     }
 };
 
-// Funcionalidad de cambio automático de proyectos
-let currentProject = 0;
-const totalProjects = 4;
-let autoChangeInterval;
-
-function changeProject(direction) {
-    // Obtener todas las cards
-    const projectCards = document.querySelectorAll('.project-card');
-    
-    console.log('Cambiando proyecto. Dirección:', direction, 'Proyecto actual:', currentProject);
-    
-    // Ocultar la card actual
-    projectCards[currentProject].classList.remove('active');
-    
-    // Calcular nueva posición
-    currentProject += direction;
-    
-    if (currentProject < 0) {
-        currentProject = totalProjects - 1;
-    } else if (currentProject >= totalProjects) {
-        currentProject = 0;
-    }
-    
-    console.log('Nuevo proyecto:', currentProject);
-    
-    // Mostrar la nueva card
-    projectCards[currentProject].classList.add('active');
-    
-    // Actualizar indicador
-    updateIndicator();
-    
-    // Reiniciar el timer automático
-    resetAutoChange();
-}
-
-function updateIndicator() {
-    const currentIndicator = document.getElementById('current-project');
-    if (currentIndicator) {
-        currentIndicator.textContent = currentProject + 1;
-    }
-}
-
-function startAutoChange() {
-    autoChangeInterval = setInterval(() => {
-        changeProject(1);
-    }, 5000); // Cambiar cada 5 segundos
-}
-
-function resetAutoChange() {
-    if (autoChangeInterval) {
-        clearInterval(autoChangeInterval);
-        startAutoChange();
-    }
-}
-
-function stopAutoChange() {
-    if (autoChangeInterval) {
-        clearInterval(autoChangeInterval);
-    }
-}
-
-// Inicializar cuando se carga la página
+// ==========================================
+// FORMULARIO DE CONTACTO SIMPLE
+// ==========================================
 document.addEventListener('DOMContentLoaded', function() {
-    // Obtener todas las cards
-    const projectCards = document.querySelectorAll('.project-card');
+    const contactForm = document.getElementById('contact-form');
     
-    // Ocultar todas las cards excepto la primera
-    projectCards.forEach((card, index) => {
-        if (index === 0) {
-            card.classList.add('active');
-        } else {
-            card.classList.remove('active');
-        }
-    });
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formStatus = document.getElementById('form-status');
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.innerHTML;
+            
+            // Validar campos
+            const nombre = contactForm.querySelector('#nombre').value.trim();
+            const email = contactForm.querySelector('#email').value.trim();
+            const mensaje = contactForm.querySelector('#mensaje').value.trim();
+            
+            if (!nombre || !email || !mensaje) {
+                showFormStatus('Por favor completa todos los campos', 'error');
+                return;
+            }
+            
+            // Validar email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showFormStatus('Por favor ingresa un email válido', 'error');
+                return;
+            }
+            
+            // Deshabilitar botón y mostrar estado de envío
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+            
+            // Crear FormData
+            const formData = new FormData(contactForm);
+            
+            // Enviar a Formspree
+            fetch('https://formspree.io/f/mdklavvo', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Éxito
+                    showFormStatus('¡Mensaje enviado exitosamente! Te responderé pronto.', 'success');
+                    contactForm.reset();
+                    
+                    // Restaurar botón después de 2 segundos
+                    setTimeout(() => {
+                        submitButton.disabled = false;
+                        submitButton.innerHTML = originalButtonText;
+                        formStatus.style.display = 'none';
+                    }, 3000);
+                } else {
+                    throw new Error('Error en el envío');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showFormStatus('Hubo un error al enviar el mensaje. Por favor intenta nuevamente.', 'error');
+                
+                // Restaurar botón
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonText;
+            });
+        });
+    }
     
-    // Iniciar cambio automático
-    startAutoChange();
-    
-    // Pausar cambio automático cuando se hace hover sobre las cards
-    projectCards.forEach(card => {
-        card.addEventListener('mouseenter', stopAutoChange);
-        card.addEventListener('mouseleave', startAutoChange);
-    });
-    
-    // Agregar console.log para debug
-    console.log('Carrusel inicializado con', projectCards.length, 'proyectos');
-}); 
+    function showFormStatus(message, type) {
+        const formStatus = document.getElementById('form-status');
+        formStatus.textContent = message;
+        formStatus.className = 'form-status ' + type;
+    }
+});
